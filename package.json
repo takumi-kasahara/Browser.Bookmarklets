@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "build:minify": "node .tools/build.minify.js",
+    "build:page": "node .tools/build.page.js",
+    "build": "npm run build:minify && npm run build:page"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/web": "^0.0.349",
+    "esbuild": "^0.28.0",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0"
+  }
+}
