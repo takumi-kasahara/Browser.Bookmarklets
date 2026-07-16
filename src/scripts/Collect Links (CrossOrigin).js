@@ -1,5 +1,5 @@
+import { collectAnchorElements, createAnchorElement } from '../modules/DocumentExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
-import { createAnchorElement } from '../modules/DocumentExtensions.js';
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
 
@@ -30,7 +30,7 @@ import { createAnchorElement } from '../modules/DocumentExtensions.js';
   }
   else {
     if (!window.confirm('Start collecting cross-origin links?')) return;
-    const collection = new Set(collect(document.body));
+    const collection = new Set(collectAnchorElements(document.body, location.origin, false));
     const observer = new MutationObserver(mutations => {
       for (const mutation of mutations)
         switch (mutation.type) {
@@ -42,7 +42,7 @@ import { createAnchorElement } from '../modules/DocumentExtensions.js';
                   && node.origin
                   && node.origin !== location.origin
                 ) collection.add(node);
-                for (const url of collect(node))
+                for (const url of collectAnchorElements(node, location.origin, false))
                   collection.add(url);
               }
             break;
@@ -65,13 +65,5 @@ import { createAnchorElement } from '../modules/DocumentExtensions.js';
         'href',
       ],
     });
-  }
-
-  /**
-   * @param {HTMLElement} element
-   */
-  function collect(element) {
-    return Array.from(element.getElementsByTagName('a'))
-      .filter(a => a.origin && a.origin !== location.origin);
   }
 })();

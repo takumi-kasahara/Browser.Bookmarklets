@@ -1,14 +1,7 @@
+import { isNotEmptyString } from '../modules/IdentifierExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
-import { extractElement } from '../modules/HtmlExtensions.js';
-import { extractObjects, tryParse } from '../modules/JsonExtensions.js';
+import { extractIdsFromSchema } from '../modules/SchemaExtensions.js';
 import { is } from '../modules/WindowExtensions.js';
-/**
- * @param {unknown} value
- * @returns {value is string}
- */
-function isNotEmptyString(value) {
-  return typeof value === 'string' && value.length > 0;
-}
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
 
@@ -16,7 +9,7 @@ function isNotEmptyString(value) {
   const params = new URL(location.href).searchParams;
   const ids = Array.from(
     new Set([
-      ...fromSchema(),
+      ...extractIdsFromSchema(document),
       ...ifAmazon(),
       ...ifOneDrive(),
       ...ifPixiv(),
@@ -28,59 +21,6 @@ function isNotEmptyString(value) {
   if (ids.length > 0) await copyToClipboard(`Copy ${ids.length} ID(s):`, ids.join('\n'));
   else console.warn('ID not found.');
 
-  /**
-   * @returns {string[]}
-   */
-  function fromSchema() {
-    const collection = new Set();
-
-    const idFromMicrodata = [document.documentElement, ...document.querySelectorAll('[itemscope]')]
-      .filter(e => e instanceof HTMLElement)
-      .flatMap(e => fromElement(extractElement(e, 'itemscope', 'itemprop'), e.getAttribute('itemtype') ?? ''));
-    if (idFromMicrodata.length > 0) for (const id of idFromMicrodata) collection.add(id);
-
-    const idFromRDFa = [document.documentElement, ...document.querySelectorAll('[typeof]')]
-      .filter(e => e instanceof HTMLElement)
-      .flatMap(e => fromElement(extractElement(e, 'typeof', 'property'), e.getAttribute('typeof') ?? ''));
-    if (idFromRDFa.length > 0) for (const id of idFromRDFa) collection.add(id);
-
-    const idFromLD = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
-      .flatMap(e => extractObjects(tryParse(e.textContent.trim())))
-      .flatMap(d => fromJson(d));
-    if (idFromLD.length > 0) for (const id of idFromLD) collection.add(id);
-
-    return collection.size > 0 ? Array.from(collection) : [];
-
-    /**
-     * @param {Record<string, unknown> | null} data
-     * @param {string} type
-     * @returns {string[]}
-     */
-    function fromElement(data, type) {
-      if (!data) return [];
-      const values = new Set();
-      switch (type) {
-        default:
-          if (Object.hasOwn(data, 'identifier')) {
-            const identifier = data['identifier'];
-            values.add(String(identifier));
-          }
-      }
-      return values.size > 0 ? Array.from(values).filter(Boolean) : [];
-    }
-    /**
-     * @param {Record<string, unknown>} data
-     * @returns {string[]}
-     */
-    function fromJson(data) {
-      const values = new Set();
-      if (Object.hasOwn(data, 'identifier')) {
-        const identifier = data['identifier'];
-        values.add(String(identifier));
-      }
-      return values.size > 0 ? Array.from(values).filter(Boolean) : [];
-    }
-  }
   function ifAmazon() {
     if (!is('amazon.co.jp')) return [];
     const e = document.querySelector('input#rufus-view-context');

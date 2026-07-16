@@ -1,8 +1,8 @@
 #!/usr/bin/env node
+import { build } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { build } from 'esbuild';
 (async () => {
   const rootDir = getRootDir();
   const srcDir = path.join(rootDir, 'src', 'scripts');
@@ -12,7 +12,8 @@ import { build } from 'esbuild';
 
   const files = fs.readdirSync(srcDir, { recursive: true, withFileTypes: true })
     .filter(x => x.isFile())
-    .map(x => path.join(x.parentPath, x.name));
+    .map(x => path.join(x.parentPath, x.name))
+    .filter(x => !/\.test\.[cm]?[jt]sx?$/.test(x));
   for (const file of files) {
     const bundled = await build({
       entryPoints: [file],

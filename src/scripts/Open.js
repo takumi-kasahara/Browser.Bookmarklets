@@ -1,21 +1,15 @@
-import { extractElement } from '../modules/HtmlExtensions.js';
-import { extractObjects, tryParse } from '../modules/JsonExtensions.js';
+import { fromISBN, isNotEmptyString } from '../modules/IdentifierExtensions.js';
+import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
+import { extractUrlsFromSelectionText } from '../modules/SelectionExtensions.js';
 import { is, open } from '../modules/WindowExtensions.js';
-/**
- * @param {unknown} value
- * @returns {value is string}
- */
-function isNotEmptyString(value) {
-  return typeof value === 'string' && value.length > 0;
-}
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
 
   const path = location.pathname.split('/');
   const urls = Array.from(
     new Set([
-      ...fromSelection(),
-      ...fromSchema(),
+      ...extractUrlsFromSelectionText(document),
+      ...extractUrlsFromSchema(document),
       ...ifAmazon(),
       ...ifDLsite(),
       ...ifPixiv(),
@@ -28,102 +22,6 @@ function isNotEmptyString(value) {
   if (urls.length > 0) await open(urls);
   else console.warn('URL not found.');
 
-  /**
-   * @param {string} value
-   */
-  function fromASIN(value) {
-    if (!value) return null;
-    const cleaned = value.trim().toUpperCase();
-    return /^[A-Z0-9]{10}$/.test(cleaned) ? `https://www.amazon.co.jp/dp/${cleaned}` : null;
-  }
-  /**
-   * @param {string} value
-   */
-  function fromISBN(value) {
-    if (!value) return null;
-    const cleaned = value.replaceAll(/[-\s]/g, '').toUpperCase();
-    return /^\d{9}(?:\d|X)$|^\d{13}$/.test(cleaned) ? `https://calil.jp/book/${cleaned}` : null;
-  }
-  /**
-   * @returns {string[]}
-   */
-  function fromSelection() {
-    const text = window.getSelection()?.toString().trim() ?? '';
-    if (!text) return [];
-    const url = fromISBN(text) || fromASIN(text);
-    return url ? [url] : [];
-  }
-  /**
-   * @returns {string[]}
-   */
-  function fromSchema() {
-    const collection = new Set();
-
-    const urlFromMicrodata = [document.documentElement, ...document.querySelectorAll('[itemscope]')]
-      .flatMap(e => fromElement(extractElement(e, 'itemscope', 'itemprop'), e.getAttribute('itemtype') ?? ''));
-    if (urlFromMicrodata.length > 0) for (const url of urlFromMicrodata) collection.add(url);
-
-    const urlFromRDFa = [document.documentElement, ...document.querySelectorAll('[typeof]')]
-      .flatMap(e => fromElement(extractElement(e, 'typeof', 'property'), e.getAttribute('typeof') ?? ''));
-    if (urlFromRDFa.length > 0) for (const url of urlFromRDFa) collection.add(url);
-
-    const urlFromLD = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
-      .flatMap(e => extractObjects(tryParse(e.textContent.trim())))
-      .flatMap(d => fromJson(d));
-    if (urlFromLD.length > 0) for (const url of urlFromLD) collection.add(url);
-
-    return collection.size > 0 ? Array.from(collection) : [];
-
-    /**
-    * @param {Record<string, unknown> | null} data
-     * @param {string} type
-     * @returns {string[]}
-     */
-    function fromElement(data, type) {
-      if (!data) return [];
-      const values = new Set();
-      switch (type) {
-        default:
-          /** @see {@link https://schema.org/asin} */
-          if (Object.hasOwn(data, 'asin'))
-            values.add(fromASIN(String(data['asin'])));
-          /** @see {@link https://schema.org/isbn} */
-          if (Object.hasOwn(data, 'isbn'))
-            values.add(fromISBN(String(data['isbn'])));
-          /** @see {@link https://schema.org/gtin} */
-          if (Object.hasOwn(data, 'gtin'))
-            values.add(fromISBN(String(data['gtin'])));
-          /** @see {@link https://schema.org/gtin13} */
-          if (Object.hasOwn(data, 'gtin13'))
-            values.add(fromISBN(String(data['gtin13'])));
-          /** @see {@link https://ogp.me/#type_book} */
-          if (Object.hasOwn(data, 'books:isbn'))
-            values.add(fromISBN(String(data['books:isbn'])));
-      }
-      return values.size > 0 ? Array.from(values).filter(Boolean) : [];
-    }
-    /**
-     * @see {@link https://schema.org/Book}
-     * @param {Record<string, unknown>} data
-     * @returns {string[]}
-     */
-    function fromJson(data) {
-      const values = new Set();
-      /** @see {@link https://schema.org/asin} */
-      if (Object.hasOwn(data, 'asin'))
-        values.add(fromASIN(String(data['asin'])));
-      /** @see {@link https://schema.org/isbn} */
-      if (Object.hasOwn(data, 'isbn'))
-        values.add(fromISBN(String(data['isbn'])));
-      /** @see {@link https://schema.org/gtin} */
-      if (Object.hasOwn(data, 'gtin'))
-        values.add(fromISBN(String(data['gtin'])));
-      /** @see {@link https://schema.org/gtin13} */
-      if (Object.hasOwn(data, 'gtin13'))
-        values.add(fromISBN(String(data['gtin13'])));
-      return values.size > 0 ? Array.from(values).filter(Boolean) : [];
-    }
-  }
   function ifAmazon() {
     if (!is('amazon.co.jp')) return [];
     const e = document.querySelector('input#rufus-view-context');

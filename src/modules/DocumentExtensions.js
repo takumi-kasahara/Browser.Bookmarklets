@@ -11,6 +11,15 @@ export function createAnchorElement(url, text) {
   return a.outerHTML;
 }
 /**
+ * @param {HTMLElement} element
+ * @param {string} origin
+ * @param {boolean} [sameOrigin]
+ */
+export function collectAnchorElements(element, origin, sameOrigin = true) {
+  return Array.from(element.getElementsByTagName('a'))
+    .filter(a => a.origin && (sameOrigin ? a.origin === origin : a.origin !== origin));
+}
+/**
  * @param {number} ms
  */
 export async function sleep(ms) {
