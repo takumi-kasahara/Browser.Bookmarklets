@@ -2,7 +2,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { escape } from '../src/modules/HtmlExtensions.js';
+import { escape } from '../src/modules/HtmlExtensions.ts';
+
+interface Bookmarklet {
+  name: string;
+  path: string;
+  href: string;
+}
+
 (() => {
   const rootDir = getRootDir();
   const distRoot = path.join(rootDir, 'dist');
@@ -15,19 +22,17 @@ import { escape } from '../src/modules/HtmlExtensions.js';
   );
   console.debug('created:', outputPath);
 
-  function getRootDir() {
+  function getRootDir(): string {
     const currentDir = path.dirname(fileURLToPath(import.meta.url));
     return path.resolve(currentDir, '..');
   }
-  /**
-   * @param {string} dir
-   */
-  function collectBookmarklets(dir) {
-    const bookmarklets = [];
+
+  function collectBookmarklets(dir: string): Bookmarklet[] {
+    const bookmarklets: Bookmarklet[] = [];
     const files = fs.readdirSync(dir, { recursive: true, withFileTypes: true });
     for (const file of files) {
       if (!file.isFile() || !file.name.endsWith('.min.js')) continue;
-      const absPath = path.join(file.parentPath ?? file.path, file.name);
+      const absPath = path.join(file.parentPath, file.name);
       const relPath = path.relative(dir, absPath);
       const code = fs.readFileSync(absPath, 'utf-8');
       bookmarklets.push({
@@ -36,7 +41,7 @@ import { escape } from '../src/modules/HtmlExtensions.js';
         href: `javascript:${encodeURIComponent(code.trim())}`,
       });
     }
-    return bookmarklets.sort((a, b) => {
+    return bookmarklets.sort((a: Bookmarklet, b: Bookmarklet): number => {
       const aHasFolder = a.path.includes(path.sep) ? 1 : 0;
       const bHasFolder = b.path.includes(path.sep) ? 1 : 0;
       if (aHasFolder !== bHasFolder)
@@ -45,19 +50,15 @@ import { escape } from '../src/modules/HtmlExtensions.js';
       return a.path.localeCompare(b.path);
     });
   }
-  /**
-   * @param {string} relPath
-   */
-  function computeEntryName(relPath) {
+
+  function computeEntryName(relPath: string): string {
     return relPath
       .replace(/\.min\.js$/, '')
       .replace(/\\/g, '/')
       .replace(/\//g, '>');
   }
-  /**
-   * @param {{name: string, href: string}[]} bookmarklets
-   */
-  function generate(bookmarklets) {
+
+  function generate(bookmarklets: Bookmarklet[]): string {
     return `<!DOCTYPE html>
 <html>
 <head>

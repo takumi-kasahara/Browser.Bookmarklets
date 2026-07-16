@@ -2,6 +2,7 @@ import { fromISBN, isNotEmptyString } from '../modules/IdentifierExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
 import { extractUrlsFromSelectionText } from '../modules/SelectionExtensions.js';
 import { is, open } from '../modules/WindowExtensions.js';
+
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
 
@@ -22,12 +23,13 @@ import { is, open } from '../modules/WindowExtensions.js';
   if (urls.length > 0) await open(urls);
   else console.warn('URL not found.');
 
-  function ifAmazon() {
+  function ifAmazon(): string[] {
     if (!is('amazon.co.jp')) return [];
     const e = document.querySelector('input#rufus-view-context');
     if (e instanceof HTMLInputElement)
       try {
-        return [fromISBN(String(JSON.parse(e.value).asin))];
+        const url = fromISBN(String(JSON.parse(e.value).asin));
+        if (url) return [url];
       }
       catch (e) {
         if (e instanceof Error) console.warn(e.message, e);
@@ -40,11 +42,14 @@ import { is, open } from '../modules/WindowExtensions.js';
     for (const pattern of patterns) {
       const match = pattern.exec(location.href);
       const asin = match?.pathname.groups.asin;
-      if (asin) return [fromISBN(asin)];
+      if (asin) {
+        const url = fromISBN(asin);
+        if (url) return [url];
+      }
     }
     return [];
   }
-  function ifDLsite() {
+  function ifDLsite(): string[] {
     if (!is('dlsite.com')) return [];
     const origin = 'https://dlwatcher.com';
     const product_id = document.querySelector('#work_buy_box_wrapper > [data-product_id]');
@@ -55,7 +60,7 @@ import { is, open } from '../modules/WindowExtensions.js';
       return [`${origin}/maker/${maker_id.dataset.followKey}`];
     return [];
   }
-  function ifPixiv() {
+  function ifPixiv(): string[] {
     if (!is('pixiv.net')) return [];
     if (location.pathname === '/history.php') {
       const ids = performance.getEntriesByType('resource')
@@ -80,7 +85,7 @@ import { is, open } from '../modules/WindowExtensions.js';
       .filter(a => a.origin === location.origin)
       .map(a => a.href);
   }
-  function ifRakuten() {
+  function ifRakuten(): string[] {
     if (!is('rakuten.co.jp')) return [];
     const coupon = new URLPattern({
       hostname: 'coupon.rakuten.co.jp',
@@ -90,7 +95,7 @@ import { is, open } from '../modules/WindowExtensions.js';
       .filter(a => coupon.test(a.href))
       .map(a => a.href);
   }
-  function ifSteam() {
+  function ifSteam(): string[] {
     if (!(is('steampowered.com') || is('steamcommunity.com'))) return [];
     const segment = [
       'app',
@@ -104,7 +109,7 @@ import { is, open } from '../modules/WindowExtensions.js';
     const id = path.at(path.indexOf(segment) + 1);
     return id ? [`https://steamdb.info/${segment}/${id}/`] : [];
   }
-  function ifYouTube() {
+  function ifYouTube(): string[] {
     if (!is('youtube.com')) return [];
     const url = new URL(location.href);
     switch (url.hostname) {

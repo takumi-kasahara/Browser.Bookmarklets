@@ -1,11 +1,12 @@
-import { is, tryFetch, from } from '../modules/WindowExtensions.js';
+import { from, is, tryFetch } from '../modules/WindowExtensions.js';
+
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
 
   const url = await translateUrl();
   if (url) location.assign(url);
 
-  async function translateUrl() {
+  async function translateUrl(): Promise<URL | null> {
     const path = location.pathname.split('/');
     const url = new URL(location.href);
     if (is('translate.goog')) {
@@ -42,16 +43,16 @@ import { is, tryFetch, from } from '../modules/WindowExtensions.js';
     return null;
 
     /**
-    * @param {string} tag
-    */
-    function lang(tag) {
+     * @param {string} tag
+     */
+    function lang(tag: string): HTMLHtmlElement | null {
       const e = document.querySelector(`html[lang|="${tag}"]`);
       return e instanceof HTMLHtmlElement ? e : null;
     }
     /**
      * @param {string} tag
      */
-    function alt(tag) {
+    function alt(tag: string): HTMLAnchorElement | HTMLLinkElement | null {
       if (is('wikipedia.org')) {
         const e = document.querySelector(`a[hreflang|="${tag}"]`);
         return e instanceof HTMLAnchorElement ? e : null;
@@ -68,13 +69,13 @@ import { is, tryFetch, from } from '../modules/WindowExtensions.js';
     /**
      * @param {RegExp} regex
      */
-    function of(regex) {
+    function of(regex: RegExp): number {
       return path.findIndex(segment => regex.test(segment));
     }
     /**
      * @param {URL | HTMLAnchorElement | HTMLLinkElement} urlLike
      */
-    async function to(urlLike) {
+    async function to(urlLike: URL | HTMLAnchorElement | HTMLLinkElement): Promise<URL | null> {
       const url = from(urlLike);
       if (location.origin !== url.origin) return url;
       const result = await tryFetch(url);
@@ -84,7 +85,7 @@ import { is, tryFetch, from } from '../modules/WindowExtensions.js';
      * @param {string} name
      * @param {string} value
      */
-    async function replaceParam(name, value) {
+    async function replaceParam(name: string, value: string): Promise<URL | null> {
       url.searchParams.set(name, value);
       const result = await tryFetch(url);
       return result.exists ? new URL(result.url) : null;
@@ -93,7 +94,7 @@ import { is, tryFetch, from } from '../modules/WindowExtensions.js';
      * @param {number} index
      * @param {...string} replaceValues
      */
-    async function replacePath(index, ...replaceValues) {
+    async function replacePath(index: number, ...replaceValues: string[]): Promise<URL | null> {
       for (const replaceValue of replaceValues) {
         path[index] = replaceValue;
         url.pathname = path.join('/');

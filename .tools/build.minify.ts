@@ -3,6 +3,7 @@ import { build } from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
 (async () => {
   const rootDir = getRootDir();
   const srcDir = path.join(rootDir, 'src', 'scripts');
@@ -11,9 +12,9 @@ import { fileURLToPath } from 'node:url';
   fs.mkdirSync(outDir, { recursive: true });
 
   const files = fs.readdirSync(srcDir, { recursive: true, withFileTypes: true })
-    .filter(x => x.isFile())
-    .map(x => path.join(x.parentPath, x.name))
-    .filter(x => !/\.test\.[cm]?[jt]sx?$/.test(x));
+    .filter((x: fs.Dirent): boolean => x.isFile())
+    .map((x: fs.Dirent): string => path.join(x.parentPath, x.name))
+    .filter((x: string): boolean => !/\.test\.[cm]?[jt]sx?$/.test(x));
   for (const file of files) {
     const bundled = await build({
       entryPoints: [file],
@@ -34,12 +35,12 @@ import { fileURLToPath } from 'node:url';
     console.debug('create:', fileName);
     fs.writeFileSync(
       path.join(distDir, fileName),
-      bundled.outputFiles.at(0).text,
+      bundled.outputFiles.at(0)!.text,
       'utf-8',
     );
   }
 
-  function getRootDir() {
+  function getRootDir(): string {
     const currentDir = path.dirname(fileURLToPath(import.meta.url));
     return path.resolve(currentDir, '..');
   }

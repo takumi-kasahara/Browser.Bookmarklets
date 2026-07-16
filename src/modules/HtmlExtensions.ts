@@ -1,16 +1,17 @@
 /**
  * @param {string} text
  */
-export function escape(text) {
+export function escape(text: string): string {
   return text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }
+
 /**
  * @param {HTMLElement} element
  */
-export function available(element) {
+export function available(element: HTMLElement): boolean {
   if (!element) throw new TypeError('Element is required.');
 
   if (!element.isConnected) return false;
@@ -28,10 +29,11 @@ export function available(element) {
   if (!element.parentElement) return true;
   return available(element.parentElement);
 }
+
 /**
  * @param {HTMLElement} element
  */
-export function visible(element) {
+export function visible(element: HTMLElement): boolean {
   if (!element) throw new TypeError('Element is required.');
 
   if (element.hidden) return false;
@@ -41,20 +43,25 @@ export function visible(element) {
   if (!element.parentElement) return true;
   return visible(element.parentElement);
 }
+
 /**
  * @param {Element} element
  * @param {string} scopeAttribute
  * @param {string} propertyAttribute
  * @returns {Record<string, unknown> | null}
  */
-export function extractElement(element, scopeAttribute, propertyAttribute) {
+export function extractElement(
+  element: Element,
+  scopeAttribute: string,
+  propertyAttribute: string,
+): Record<string, unknown> | null {
   const grouped = Object.groupBy(
     Array.from(element.querySelectorAll(`[${propertyAttribute}]`))
-      .filter(e => e instanceof HTMLElement)
+      .filter((e): e is HTMLElement => e instanceof HTMLElement)
       .filter(e => e.parentElement?.closest(`[${scopeAttribute}]`) === element || e.closest(`[${scopeAttribute}]`) === null),
     e => e.getAttribute(propertyAttribute) ?? '');
   if (Object.keys(grouped).length === 0) return null;
-  const data = new Map();
+  const data = new Map<string, unknown>();
   for (const [key, group] of Object.entries(grouped)) {
     if (!key || !group || group.length === 0) continue;
     const first = group.at(0);
@@ -67,7 +74,7 @@ export function extractElement(element, scopeAttribute, propertyAttribute) {
    * @see {@link https://html.spec.whatwg.org/multipage/microdata.html#values}
    * @param {HTMLElement} element
    */
-  function getValue(element) {
+  function getValue(element: HTMLElement): unknown {
     if (element.hasAttribute('content')) return element.getAttribute('content');
     if (element instanceof HTMLMetaElement) return element.content;
     if (element instanceof HTMLAudioElement)

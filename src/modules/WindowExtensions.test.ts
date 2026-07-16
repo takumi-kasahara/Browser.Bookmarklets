@@ -256,7 +256,7 @@ describe('open', () => {
 
   it('falls back to copyToClipboard when confirmation is cancelled', async () => {
     const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null);
-    const confirmSpy = vi.spyOn(window, 'confirm').mockImplementation(() => false);
+    vi.spyOn(window, 'confirm').mockImplementation(() => false);
     const alertSpy = vi.spyOn(window, 'alert').mockImplementation(() => { });
     await open(['https://example.com/a', 'https://example.com/b', 'https://example.com/c']);
     expect(openSpy).not.toHaveBeenCalled();
