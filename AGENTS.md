@@ -30,9 +30,9 @@ This project is a collection of browser bookmarklets that extend web browsing fu
 
 ## Coding Conventions
 
-Project-specific JavaScript coding rules are maintained in:
+Project-specific TypeScript coding rules are maintained in:
 
-- [.github/instructions/javascript.instructions.md](.github/instructions/javascript.instructions.md)
+- [.agents/skills/typescript-browser-scripts/SKILL.md](.agents/skills/typescript-browser-scripts/SKILL.md)
 
 ## Module Organization
 
