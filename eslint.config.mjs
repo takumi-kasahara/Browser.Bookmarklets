@@ -1,4 +1,6 @@
 import pluginJs from '@eslint/js';
+import htmlEslint from '@html-eslint/eslint-plugin';
+import htmlParser from '@html-eslint/parser';
 import stylistic from '@stylistic/eslint-plugin';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -12,6 +14,20 @@ export default [
       'dist',
       'node_modules',
     ],
+  },
+  {
+    files: [
+      '**/*.html',
+    ],
+    languageOptions: {
+      parser: htmlParser,
+    },
+    plugins: {
+      '@html-eslint': htmlEslint,
+    },
+    rules: {
+      ...htmlEslint.configs['flat/recommended'].rules,
+    },
   },
   {
     files: [
