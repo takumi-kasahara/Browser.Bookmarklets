@@ -91,8 +91,11 @@ import { is, open } from '../modules/WindowExtensions.js';
       hostname: 'coupon.rakuten.co.jp',
       search: 'getkey=:getkey',
     });
+    const campaign = new URLPattern({
+      search: 'scid=wi_pym_cpn_list',
+    });
     return Array.from(document.getElementsByTagName('a'))
-      .filter(a => coupon.test(a.href))
+      .filter(a => coupon.test(a.href) || campaign.test(a.href))
       .map(a => a.href);
   }
   function ifSteam(): string[] {
