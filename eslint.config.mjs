@@ -27,6 +27,9 @@ export default [
     },
     rules: {
       ...htmlEslint.configs['flat/recommended'].rules,
+      '@html-eslint/indent': ['error', 2],
+      '@html-eslint/no-extra-spacing-tags': 'off',
+      '@html-eslint/require-closing-tags': 'off',
     },
   },
   {

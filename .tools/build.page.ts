@@ -60,7 +60,7 @@ interface Bookmarklet {
 
   function generate(bookmarklets: Bookmarklet[]): string {
     return `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Bookmarklets</title>

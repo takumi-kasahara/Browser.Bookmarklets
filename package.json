@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "build": "npm run build:minify && npm run build:page",
+    "build": "npm run build:minify && npm run build:page && npm run format:page",
     "build:minify": "node --experimental-strip-types .tools/build.minify.ts",
     "build:page": "node --experimental-strip-types .tools/build.page.ts",
+    "format:page": "prettier --write pages/Bookmarklets.html",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -20,6 +21,7 @@
     "eslint": "^10.8.0",
     "globals": "^17.8.0",
     "jsdom": "^30.0.1",
+    "prettier": "^3.9.6",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",
     "vitest": "^4.1.10"
