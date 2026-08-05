@@ -24,16 +24,14 @@ if (!navigator.clipboard) {
   Object.defineProperty(navigator, 'clipboard', {
     configurable: true,
     value: {
-      writeText: async (_text: string): Promise<void> => { },
-      write: async (_items: ClipboardItem[]): Promise<void> => { },
+      writeText: async (_text: string): Promise<void> => { void _text; },
+      write: async (_items: ClipboardItem[]): Promise<void> => { void _items; },
     },
   });
 }
 
 // jsdom lacks Element.setHTML; fall back to textContent so createAnchorElement works.
-// @ts-expect-error - setHTML is not in the current @types/web DOM lib
 if (typeof HTMLElement.prototype.setHTML !== 'function') {
-  // @ts-expect-error - assigning polyfill
   HTMLElement.prototype.setHTML = function setHTML(text: string) {
     this.textContent = text;
   };
@@ -44,7 +42,7 @@ if (typeof HTMLElement.prototype.setHTML !== 'function') {
 if (typeof Object.getOwnPropertyDescriptor(HTMLAnchorElement.prototype, 'origin')?.get !== 'function') {
   Object.defineProperty(HTMLAnchorElement.prototype, 'origin', {
     configurable: true,
-    get(this: HTMLAnchorElement) {
+    get() {
       try {
         return new URL(this.href).origin;
       }
