@@ -12,7 +12,6 @@ import { is } from '../modules/WindowExtensions.js';
     new Set([
       ...extractIdsFromSchema(document),
       ...ifAmazon(),
-      ...ifOneDrive(),
       ...ifPixiv(),
       ...ifTwitter(),
       ...ifYouTube(),
@@ -44,16 +43,6 @@ import { is } from '../modules/WindowExtensions.js';
     const node = params.get('node');
     return node ? [node] : [];
   }
-  function ifOneDrive(): string[] {
-    if (!is('onedrive.live.com')) return [];
-    return [
-      document.querySelector('.ms-Breadcrumb-item')?.textContent?.trim(),
-      document.getElementById('__details-panel-title')?.textContent?.trim(),
-      document.getElementById('__photo-view-photo-main')?.dataset?.automationid,
-      params.get('id'),
-      params.get('photosData'),
-    ].filter((x): x is string => Boolean(x));
-  }
   function ifPixiv(): string[] {
     if (!is('pixiv.net')) return [];
     // /*/artworks/:illust_id
@@ -71,12 +60,15 @@ import { is } from '../modules/WindowExtensions.js';
     return path.at(1) === 'status' && path.at(2) ? [path.at(2)!] : [];
   }
   function ifYouTube(): string[] {
+    // youtu.be/:video_id
     if (is('youtu.be')) return path.at(1) ? [path.at(1)!] : [];
     if (!(is('youtube.com') || is('m.youtube.com'))) return [];
-    // shorts/:id
+    // shorts/:video_id
     if (path.at(1) === 'shorts') return path.at(2) ? [path.at(2)!] : [];
     return [
+      // v=:video_id
       params.get('v'),
+      // list=:playlist_id
       params.get('list'),
     ].filter((x): x is string => Boolean(x));
   }
