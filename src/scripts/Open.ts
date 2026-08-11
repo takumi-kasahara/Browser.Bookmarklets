@@ -19,6 +19,7 @@ import { is, open } from '../modules/WindowExtensions.js';
       ...ifYouTube(),
     ]))
     .filter(isNotEmptyString)
+    .filter(url => url !== location.href)
     .sort(new Intl.Collator(undefined, { numeric: true }).compare);
   if (urls.length > 0) await open(urls);
   else console.warn('URL not found.');
