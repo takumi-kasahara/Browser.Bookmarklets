@@ -2,7 +2,7 @@ import { is } from '../modules/WindowExtensions.js';
 
 (() => {
   if (!/https?:/.test(location.protocol)) return;
-  if (is('translate.google.com')) return;
+  if (location.hostname === 'translate.google.com') return;
 
   const selectedText = document.getSelection?.()?.toString().trim() ?? '';
   if (selectedText) {
@@ -15,5 +15,6 @@ import { is } from '../modules/WindowExtensions.js';
     if (e instanceof HTMLElement && e.dataset.sourceUrl)
       window.open(e.dataset.sourceUrl, '_blank', 'noreferrer');
   }
-  window.open(`https://translate.google.com/translate?sl=auto&tl=ja&u=${location.href}`, '_blank', 'noreferrer');
+  if (!document.querySelector('html[lang|=ja]'))
+    window.open(`https://translate.google.com/translate?sl=auto&tl=ja&u=${location.href}`, '_blank', 'noreferrer');
 })();
