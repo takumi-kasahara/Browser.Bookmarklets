@@ -3,7 +3,7 @@ import { is } from '../modules/WindowExtensions.js';
 (() => {
   const selectedText = document.getSelection?.()?.toString().trim() ?? '';
   if (selectedText) {
-    const tl = /[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText);
+    const tl = /[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText) ? 'en' : 'ja';
     window.open(`https://translate.google.com/?sl=auto&tl=${tl}&text=${encodeURIComponent(selectedText)}&op=translate`, '_blank', 'noreferrer');
   }
   else if (location.hostname === 'translate.google.com')
