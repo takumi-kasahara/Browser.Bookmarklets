@@ -4,7 +4,7 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
   if (!/https?:/.test(location.protocol)) return;
 
   const url = await translateUrl();
-  if (url) location.assign(url);
+  if (url && url.href !== location.href) location.assign(url);
 
   async function translateUrl(): Promise<URL | null> {
     const path = location.pathname.split('/');
