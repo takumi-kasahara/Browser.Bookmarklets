@@ -47,7 +47,7 @@ interface Bookmarklet {
       if (aHasFolder !== bHasFolder)
         return aHasFolder - bHasFolder;
 
-      return a.path.localeCompare(b.path);
+      return a.name.localeCompare(b.name);
     });
   }
 
