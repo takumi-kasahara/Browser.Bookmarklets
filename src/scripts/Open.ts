@@ -1,4 +1,4 @@
-import { fromISBN, isNotEmptyString } from '../modules/IdentifierExtensions.js';
+import { extractAmazonAsin, extractYouTubePlaylistId, extractYouTubeVideoId, fromISBN, isNotEmptyString } from '../modules/IdentifierExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
 import { extractUrlsFromSelectionText } from '../modules/SelectionExtensions.js';
 import { is, open } from '../modules/WindowExtensions.js';
@@ -26,29 +26,10 @@ import { is, open } from '../modules/WindowExtensions.js';
 
   function ifAmazon(): string[] {
     if (!is('amazon.co.jp')) return [];
-    const e = document.querySelector('input#rufus-view-context');
-    if (e instanceof HTMLInputElement)
-      try {
-        const url = fromISBN(String(JSON.parse(e.value).asin));
-        if (url) return [url];
-      }
-      catch (e) {
-        if (e instanceof Error) console.warn(e.message, e);
-        else console.warn(e);
-      }
-    const patterns = [
-      new URLPattern({ pathname: '/dp/:asin' }),
-      new URLPattern({ pathname: '/gp/product/:asin' }),
-    ];
-    for (const pattern of patterns) {
-      const match = pattern.exec(location.href);
-      const asin = match?.pathname.groups.asin;
-      if (asin) {
-        const url = fromISBN(asin);
-        if (url) return [url];
-      }
-    }
-    return [];
+    const asin = extractAmazonAsin(document);
+    if (!asin) return [];
+    const url = fromISBN(asin);
+    return url ? [url] : [];
   }
   function ifDLsite(): string[] {
     if (!is('dlsite.com')) return [];
@@ -116,15 +97,26 @@ import { is, open } from '../modules/WindowExtensions.js';
   function ifYouTube(): string[] {
     if (!is('youtube.com')) return [];
     const url = new URL(location.href);
-    switch (url.hostname) {
-      case 'www.youtube.com':
-        url.hostname = 'music.youtube.com';
+    if (url.hostname === 'www.youtube.com') {
+      url.hostname = 'music.youtube.com';
+      const videoId = extractYouTubeVideoId(url.href);
+      if (videoId) {
+        url.pathname = `/watch`;
+        url.searchParams.set('v', videoId);
         return [url.href];
-      case 'music.youtube.com':
-        url.hostname = 'www.youtube.com';
+      }
+      const playlistId = extractYouTubePlaylistId(url.href);
+      if (playlistId) {
+        url.pathname = `/playlist`;
+        url.searchParams.set('list', playlistId);
         return [url.href];
-      default:
-        return [];
+      }
+      return [url.href];
     }
+    else if (url.hostname === 'music.youtube.com') {
+      url.hostname = 'www.youtube.com';
+      return [url.href];
+    }
+    return [];
   }
 })();

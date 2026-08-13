@@ -7,6 +7,70 @@ export function isNotEmptyString(value: unknown): value is string {
 }
 
 /**
+ * Extract the Amazon ASIN from the current page.
+ *
+ * @param {Document} document
+ * @param {string} [href=location.href]
+ * @returns {string | null}
+ */
+export function extractAmazonAsin(document: Document, href: string = location.href): string | null {
+  const e = document.querySelector('input#rufus-view-context');
+  if (e instanceof HTMLInputElement) {
+    try {
+      const asin = JSON.parse(e.value).asin;
+      if (asin) return String(asin);
+    }
+    catch (e) {
+      if (e instanceof Error) console.warn(e.message, e);
+      else console.warn(e);
+    }
+  }
+
+  const patterns = [
+    new URLPattern({ pathname: '/dp/:asin' }),
+    new URLPattern({ pathname: '/gp/product/:asin' }),
+  ];
+  for (const pattern of patterns) {
+    const match = pattern.exec(href);
+    const asin = match?.pathname.groups.asin;
+    if (asin) return asin;
+  }
+  return null;
+}
+
+/**
+ * Extract the YouTube video ID from the current page.
+ *
+ * @param {string} [href=location.href]
+ * @returns {string | null}
+ */
+export function extractYouTubeVideoId(href: string = location.href): string | null {
+  const url = new URL(href);
+  if (url.hostname === 'youtu.be') {
+    const id = url.pathname.split('/').at(1);
+    return id || null;
+  }
+  if (url.hostname === 'www.youtube.com' || url.hostname === 'm.youtube.com') {
+    const path = url.pathname.split('/');
+    if (path.at(1) === 'shorts') return path.at(2) || null;
+    return url.searchParams.get('v') || null;
+  }
+  return null;
+}
+
+/**
+ * Extract the YouTube playlist ID from the current page.
+ *
+ * @param {string} [href=location.href]
+ * @returns {string | null}
+ */
+export function extractYouTubePlaylistId(href: string = location.href): string | null {
+  const url = new URL(href);
+  if (url.hostname !== 'www.youtube.com' && url.hostname !== 'm.youtube.com') return null;
+  return url.searchParams.get('list');
+}
+
+/**
  * @param {string | null | undefined} value
  * @returns {string | null}
  */
