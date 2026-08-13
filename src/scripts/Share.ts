@@ -1,5 +1,6 @@
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
+  if (location.hostname === 'x.com') return;
 
   const canonical = document.querySelector('link[rel="canonical"]');
   const url = canonical instanceof HTMLLinkElement ? canonical.href : location.href;
