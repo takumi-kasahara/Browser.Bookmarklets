@@ -1,4 +1,4 @@
-import { fromASIN, fromISBN } from './IdentifierExtensions.js';
+import { toAmazon, toCalil } from './IdentifierExtensions.js';
 
 /**
  * Collect anchor hrefs within the current text selection.
@@ -30,6 +30,6 @@ export function extractUrlsFromSelection(document: Document): string[] {
 export function extractUrlsFromSelectionText(document: Document): string[] {
   const text = document.getSelection?.()?.toString().trim() ?? '';
   if (!text) return [];
-  const url = fromISBN(text) || fromASIN(text);
+  const url = toCalil(text) || toAmazon(text);
   return url ? [url] : [];
 }

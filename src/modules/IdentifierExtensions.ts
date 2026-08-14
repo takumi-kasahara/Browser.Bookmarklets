@@ -74,7 +74,7 @@ export function extractYouTubePlaylistId(href: string = location.href): string |
  * @param {string | null | undefined} value
  * @returns {string | null}
  */
-export function fromASIN(value: string | null | undefined): string | null {
+export function toAmazon(value: string | null | undefined): string | null {
   if (!value) return null;
   const cleaned = value.trim().toUpperCase();
   return /^[A-Z0-9]{10}$/.test(cleaned) ? `https://www.amazon.co.jp/dp/${cleaned}` : null;
@@ -84,7 +84,17 @@ export function fromASIN(value: string | null | undefined): string | null {
  * @param {string | null | undefined} value
  * @returns {string | null}
  */
-export function fromISBN(value: string | null | undefined): string | null {
+export function toKeepa(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const cleaned = value.trim().toUpperCase();
+  return /^[A-Z0-9]{10}$/.test(cleaned) ? `https://keepa.com/#!product/5-${cleaned}` : null;
+}
+
+/**
+ * @param {string | null | undefined} value
+ * @returns {string | null}
+ */
+export function toCalil(value: string | null | undefined): string | null {
   if (!value) return null;
   const cleaned = value.replaceAll(/[-\s]/g, '').toUpperCase();
   return /^\d{9}(?:\d|X)$|^\d{13}$/.test(cleaned) ? `https://calil.jp/book/${cleaned}` : null;

@@ -1,4 +1,4 @@
-import { extractAmazonAsin, extractYouTubePlaylistId, extractYouTubeVideoId, fromISBN, isNotEmptyString } from '../modules/IdentifierExtensions.js';
+import { extractAmazonAsin, extractYouTubePlaylistId, extractYouTubeVideoId, isNotEmptyString, toCalil, toKeepa } from '../modules/IdentifierExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
 import { extractUrlsFromSelectionText } from '../modules/SelectionExtensions.js';
 import { is, open } from '../modules/WindowExtensions.js';
@@ -28,7 +28,7 @@ import { is, open } from '../modules/WindowExtensions.js';
     if (!is('amazon.co.jp')) return [];
     const asin = extractAmazonAsin(document);
     if (!asin) return [];
-    const url = fromISBN(asin);
+    const url = toCalil(asin) ?? toKeepa(asin);
     return url ? [url] : [];
   }
   function ifDLsite(): string[] {
