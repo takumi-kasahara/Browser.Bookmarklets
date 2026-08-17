@@ -1,3 +1,5 @@
+import { is } from './WindowExtensions';
+
 /**
  * @param {unknown} value
  * @returns {value is string}
@@ -50,7 +52,7 @@ export function extractYouTubeVideoId(href: string = location.href): string | nu
     const id = url.pathname.split('/').at(1);
     return id || null;
   }
-  if (url.hostname === 'www.youtube.com' || url.hostname === 'm.youtube.com') {
+  if (is('youtube.com')) {
     const path = url.pathname.split('/');
     if (path.at(1) === 'shorts') return path.at(2) || null;
     return url.searchParams.get('v') || null;
@@ -66,7 +68,7 @@ export function extractYouTubeVideoId(href: string = location.href): string | nu
  */
 export function extractYouTubePlaylistId(href: string = location.href): string | null {
   const url = new URL(href);
-  if (url.hostname !== 'www.youtube.com' && url.hostname !== 'm.youtube.com') return null;
+  if (!is('youtube.com')) return null;
   return url.searchParams.get('list');
 }
 
