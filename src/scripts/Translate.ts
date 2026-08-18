@@ -2,7 +2,7 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
 
 (async () => {
   const selectedText = document.getSelection?.()?.toString().trim() ?? '';
-  if (selectedText) {
+  if (selectedText && !/[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText)) {
     const words = selectedText.split(/\s+/).filter(word => word.length > 0);
     if (words.length > 0)
       for (const word of words)
