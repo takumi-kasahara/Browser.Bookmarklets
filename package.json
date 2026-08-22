@@ -3,7 +3,7 @@
     "build": "npm run build:minify && npm run build:page && npm run lint",
     "build:minify": "node --experimental-strip-types .tools/build.minify.ts",
     "build:page": "node --experimental-strip-types .tools/build.page.ts",
-    "lint": "prettier --write . && eslint --fix .",
+    "lint": "prettier --write . && markdownlint-cli2 --fix . && eslint --fix .",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
@@ -20,6 +20,7 @@
     "eslint": "^10.8.0",
     "globals": "^17.8.0",
     "jsdom": "^30.0.1",
+    "markdownlint-cli2": "^0.23.2",
     "prettier": "^3.9.6",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",
