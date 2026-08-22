@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { extractIdsFromSchema, extractUrlsFromSchema } from './SchemaExtensions.js';
+import {
+  extractIdsFromSchema,
+  extractUrlsFromSchema,
+} from './SchemaExtensions.js';
 
 function setDocument(html: string): void {
   document.documentElement.innerHTML = html;
@@ -22,14 +25,18 @@ describe('extractUrlsFromSchema', () => {
     setDocument(`<html><body>
       <script type="application/ld+json">{"url":"https://example.com/page"}</script>
     </body></html>`);
-    expect(extractUrlsFromSchema(document)).toEqual(['https://example.com/page']);
+    expect(extractUrlsFromSchema(document)).toEqual([
+      'https://example.com/page',
+    ]);
   });
 
   it('extracts @id from VideoObject in JSON-LD', () => {
     setDocument(`<html><body>
       <script type="application/ld+json">{"@type":"VideoObject","@id":"https://example.com/video/1"}</script>
     </body></html>`);
-    expect(extractUrlsFromSchema(document)).toEqual(['https://example.com/video/1']);
+    expect(extractUrlsFromSchema(document)).toEqual([
+      'https://example.com/video/1',
+    ]);
   });
 
   it('extracts identifier as x.com user URL when origin is x.com', () => {
@@ -40,7 +47,9 @@ describe('extractUrlsFromSchema', () => {
     setDocument(`<html><body>
       <script type="application/ld+json">{"identifier":"123456789"}</script>
     </body></html>`);
-    expect(extractUrlsFromSchema(document)).toEqual(['https://x.com/i/user/123456789']);
+    expect(extractUrlsFromSchema(document)).toEqual([
+      'https://x.com/i/user/123456789',
+    ]);
   });
 
   it('does not extract identifier when origin is not x.com', () => {

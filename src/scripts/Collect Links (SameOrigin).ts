@@ -1,4 +1,7 @@
-import { collectAnchorElements, createAnchorElement } from '../modules/DocumentExtensions.js';
+import {
+  collectAnchorElements,
+  createAnchorElement,
+} from '../modules/DocumentExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 
 (async () => {
@@ -9,7 +12,10 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
   const state = window as unknown as Window & { [key: symbol]: unknown };
   const collectedState = state[COLLECTED];
   const collectorState = state[COLLECTOR];
-  if (collectedState instanceof Set && collectorState instanceof MutationObserver) {
+  if (
+    collectedState instanceof Set
+    && collectorState instanceof MutationObserver
+  ) {
     if (!window.confirm('Stop collecting?')) return;
     collectorState.disconnect();
     state[COLLECTOR] = null;
@@ -22,7 +28,8 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
       .filter((a): a is HTMLAnchorElement => a instanceof HTMLAnchorElement)
       .map(a => createAnchorElement(a.href, a.innerHTML.trim()));
     if (urls.length > 0)
-      await copyToClipboard(`Copy ${urls.length} URL(s):`,
+      await copyToClipboard(
+        `Copy ${urls.length} URL(s):`,
         new ClipboardItem({
           'text/plain': new Blob([urls.join('\n')]),
           'text/html': new Blob([anchors.join('<br>')]),
@@ -31,7 +38,9 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
   }
   else {
     if (!window.confirm('Start collecting same-origin links?')) return;
-    const collection = new Set(collectAnchorElements(document.body, location.origin, true));
+    const collection = new Set(
+      collectAnchorElements(document.body, location.origin, true),
+    );
     const observer = new MutationObserver(mutations => {
       for (const mutation of mutations)
         switch (mutation.type) {
@@ -41,9 +50,14 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
                 if (
                   node instanceof HTMLAnchorElement
                   && node.origin === location.origin
-                ) collection.add(node);
+                )
+                  collection.add(node);
                 else
-                  for (const a of collectAnchorElements(node, location.origin, true))
+                  for (const a of collectAnchorElements(
+                    node,
+                    location.origin,
+                    true,
+                  ))
                     collection.add(a);
               }
         }

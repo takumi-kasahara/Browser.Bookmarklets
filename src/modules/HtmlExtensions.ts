@@ -15,15 +15,17 @@ export function available(element: HTMLElement): boolean {
   if (!element) throw new TypeError('Element is required.');
 
   if (!element.isConnected) return false;
-  if ((
-    element instanceof HTMLButtonElement
-    || element instanceof HTMLFieldSetElement
-    || element instanceof HTMLInputElement
-    || element instanceof HTMLOptGroupElement
-    || element instanceof HTMLOptionElement
-    || element instanceof HTMLSelectElement
-    || element instanceof HTMLTextAreaElement
-  ) && element.disabled) return false;
+  if (
+    (element instanceof HTMLButtonElement
+      || element instanceof HTMLFieldSetElement
+      || element instanceof HTMLInputElement
+      || element instanceof HTMLOptGroupElement
+      || element instanceof HTMLOptionElement
+      || element instanceof HTMLSelectElement
+      || element instanceof HTMLTextAreaElement)
+    && element.disabled
+  )
+    return false;
   if (window.getComputedStyle(element).pointerEvents === 'none') return false;
 
   if (!element.parentElement) return true;
@@ -58,15 +60,23 @@ export function extractElement(
   const grouped = Object.groupBy(
     Array.from(element.querySelectorAll(`[${propertyAttribute}]`))
       .filter((e): e is HTMLElement => e instanceof HTMLElement)
-      .filter(e => e.parentElement?.closest(`[${scopeAttribute}]`) === element || e.closest(`[${scopeAttribute}]`) === null),
-    e => e.getAttribute(propertyAttribute) ?? '');
+      .filter(
+        e =>
+          e.parentElement?.closest(`[${scopeAttribute}]`) === element
+          || e.closest(`[${scopeAttribute}]`) === null,
+      ),
+    e => e.getAttribute(propertyAttribute) ?? '',
+  );
   if (Object.keys(grouped).length === 0) return null;
   const data = new Map<string, unknown>();
   for (const [key, group] of Object.entries(grouped)) {
     if (!key || !group || group.length === 0) continue;
     const first = group.at(0);
     if (!first) continue;
-    data.set(key, group.length === 1 ? getValue(first) : group.map(e => getValue(e)));
+    data.set(
+      key,
+      group.length === 1 ? getValue(first) : group.map(e => getValue(e)),
+    );
   }
   return Object.fromEntries(data);
 
@@ -78,16 +88,28 @@ export function extractElement(
     if (element.hasAttribute('content')) return element.getAttribute('content');
     if (element instanceof HTMLMetaElement) return element.content;
     if (element instanceof HTMLAudioElement)
-      return element.src ?? Array.from(element.children)
-        .find(e => e instanceof HTMLSourceElement || e instanceof HTMLTrackElement)?.src;
+      return (
+        element.src
+        ?? Array.from(element.children).find(
+          e =>
+            e instanceof HTMLSourceElement || e instanceof HTMLTrackElement,
+        )?.src
+      );
     if (element instanceof HTMLEmbedElement) return element.src;
     if (element instanceof HTMLIFrameElement) return element.src;
-    if (element instanceof HTMLImageElement) return element.src ?? element.srcset;
-    if (element instanceof HTMLSourceElement) return element.src ?? element.srcset;
+    if (element instanceof HTMLImageElement)
+      return element.src ?? element.srcset;
+    if (element instanceof HTMLSourceElement)
+      return element.src ?? element.srcset;
     if (element instanceof HTMLTrackElement) return element.src;
     if (element instanceof HTMLVideoElement)
-      return element.src ?? Array.from(element.children)
-        .find(e => e instanceof HTMLSourceElement || e instanceof HTMLTrackElement)?.src;
+      return (
+        element.src
+        ?? Array.from(element.children).find(
+          e =>
+            e instanceof HTMLSourceElement || e instanceof HTMLTrackElement,
+        )?.src
+      );
     if (element instanceof HTMLAnchorElement) return element.href;
     if (element instanceof HTMLAreaElement) return element.href;
     if (element instanceof HTMLLinkElement) return element.href;

@@ -7,10 +7,13 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
   if (table instanceof HTMLTableElement) {
     const text = table.outerText;
     const html = table.outerHTML;
-    await copyToClipboard(`Copy table:`, new ClipboardItem({
-      'text/plain': new Blob([text]),
-      'text/html': new Blob([html]),
-    }));
+    await copyToClipboard(
+      `Copy table:`,
+      new ClipboardItem({
+        'text/plain': new Blob([text]),
+        'text/html': new Blob([html]),
+      }),
+    );
   }
   else console.warn('Table not found.');
 })();

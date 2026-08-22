@@ -3,7 +3,7 @@
   "options": {},
   "presentation": {
     "reveal": "silent",
-    "revealProblems": "onProblem",
+    "revealProblems": "onProblem"
   },
-  "tasks": [],
+  "tasks": []
 }

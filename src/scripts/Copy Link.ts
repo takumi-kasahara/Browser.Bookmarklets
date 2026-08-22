@@ -6,8 +6,11 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 
   const url = location.href;
   const title = document.title.trim();
-  await copyToClipboard(`Copy link:`, new ClipboardItem({
-    'text/plain': new Blob([`${title}\n${url}`]),
-    'text/html': new Blob([createAnchorElement(url, title)]),
-  }));
+  await copyToClipboard(
+    `Copy link:`,
+    new ClipboardItem({
+      'text/plain': new Blob([`${title}\n${url}`]),
+      'text/html': new Blob([createAnchorElement(url, title)]),
+    }),
+  );
 })();

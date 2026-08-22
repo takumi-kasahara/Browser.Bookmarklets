@@ -2,11 +2,18 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
 
 (async () => {
   const selectedText = document.getSelection?.()?.toString().trim() ?? '';
-  if (selectedText && !/[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText)) {
+  if (
+    selectedText
+    && !/[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText)
+  ) {
     const words = selectedText.split(/\s+/).filter(word => word.length > 0);
     if (words.length > 0)
       for (const word of words)
-        window.open(`https://www.dictionary.com/browse/${encodeURIComponent(word)}`, '_blank', 'noreferrer');
+        window.open(
+          `https://www.dictionary.com/browse/${encodeURIComponent(word)}`,
+          '_blank',
+          'noreferrer',
+        );
   }
   else if (location.hostname === 'www.dictionary.com')
     location.hostname = 'www.thesaurus.com';
@@ -31,25 +38,35 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
     const alt_en = alt('en');
     if (!lang('en') && alt_en) return to(alt_en);
     if (is('android.com') || is('google.com') || is('google')) {
-      if (!lang('ja') && url.searchParams.get('hl') !== 'ja') return replaceParam('hl', 'ja');
-      if (!lang('en') && url.searchParams.get('hl') !== 'en') return replaceParam('hl', 'en');
+      if (!lang('ja') && url.searchParams.get('hl') !== 'ja')
+        return replaceParam('hl', 'ja');
+      if (!lang('en') && url.searchParams.get('hl') !== 'en')
+        return replaceParam('hl', 'en');
     }
     if (is('steampowered.com')) {
-      if (!lang('ja') && url.searchParams.get('l') !== 'japanese') return replaceParam('l', 'japanese');
-      if (!lang('en') && url.searchParams.get('l') !== 'english') return replaceParam('l', 'english');
+      if (!lang('ja') && url.searchParams.get('l') !== 'japanese')
+        return replaceParam('l', 'japanese');
+      if (!lang('en') && url.searchParams.get('l') !== 'english')
+        return replaceParam('l', 'english');
     }
     if (url.searchParams.has('lang')) {
-      if (!lang('ja') && url.searchParams.get('lang') !== 'ja') return replaceParam('lang', 'ja');
-      if (!lang('en') && url.searchParams.get('lang') !== 'en') return replaceParam('lang', 'en');
+      if (!lang('ja') && url.searchParams.get('lang') !== 'ja')
+        return replaceParam('lang', 'ja');
+      if (!lang('en') && url.searchParams.get('lang') !== 'en')
+        return replaceParam('lang', 'en');
     }
     if (url.searchParams.has('locale')) {
-      if (!lang('ja') && url.searchParams.get('locale') !== 'ja') return replaceParam('locale', 'ja');
-      if (!lang('en') && url.searchParams.get('locale') !== 'en') return replaceParam('locale', 'en');
+      if (!lang('ja') && url.searchParams.get('locale') !== 'ja')
+        return replaceParam('locale', 'ja');
+      if (!lang('en') && url.searchParams.get('locale') !== 'en')
+        return replaceParam('locale', 'en');
     }
     const LCID_en = /^en(?:-[A-Za-z0-9]{2,})?$/i;
-    if (of(LCID_en) > -1) return replacePath(of(LCID_en), 'ja', 'ja-jp', 'ja-JP', 'ja_jp');
+    if (of(LCID_en) > -1)
+      return replacePath(of(LCID_en), 'ja', 'ja-jp', 'ja-JP', 'ja_jp');
     const LCID_ja = /^ja(?:-[A-Za-z0-9]{2,})?$/i;
-    if (of(LCID_ja) > -1) return replacePath(of(LCID_ja), 'en', 'en-us', 'en-US', 'en_us');
+    if (of(LCID_ja) > -1)
+      return replacePath(of(LCID_ja), 'en', 'en-us', 'en-US', 'en_us');
     if (!lang('ja')) return null;
     return null;
 
@@ -69,12 +86,17 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
         return e instanceof HTMLAnchorElement ? e : null;
       }
       if (tag === 'en') {
-        const e = document.querySelector('link[rel="alternate"][hreflang="x-default"]')
+        const e
+          = document.querySelector(
+            'link[rel="alternate"][hreflang="x-default"]',
+          )
           ?? document.querySelector('link[rel="alternate"][hreflang="en-us"]')
           ?? document.querySelector('link[rel="alternate"][hreflang="en"]');
         return e instanceof HTMLLinkElement ? e : null;
       }
-      const e = document.querySelector(`link[rel="alternate"][hreflang|="${tag}"]`);
+      const e = document.querySelector(
+        `link[rel="alternate"][hreflang|="${tag}"]`,
+      );
       return e instanceof HTMLLinkElement ? e : null;
     }
     /**
@@ -86,7 +108,9 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
     /**
      * @param {URL | HTMLAnchorElement | HTMLLinkElement} urlLike
      */
-    async function to(urlLike: URL | HTMLAnchorElement | HTMLLinkElement): Promise<URL | null> {
+    async function to(
+      urlLike: URL | HTMLAnchorElement | HTMLLinkElement,
+    ): Promise<URL | null> {
       const url = from(urlLike);
       if (location.origin !== url.origin) return url;
       const result = await tryFetch(url);
@@ -96,7 +120,10 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
      * @param {string} name
      * @param {string} value
      */
-    async function replaceParam(name: string, value: string): Promise<URL | null> {
+    async function replaceParam(
+      name: string,
+      value: string,
+    ): Promise<URL | null> {
       url.searchParams.set(name, value);
       const result = await tryFetch(url);
       return result.exists ? new URL(result.url) : null;
@@ -105,7 +132,10 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
      * @param {number} index
      * @param {...string} replaceValues
      */
-    async function replacePath(index: number, ...replaceValues: string[]): Promise<URL | null> {
+    async function replacePath(
+      index: number,
+      ...replaceValues: string[]
+    ): Promise<URL | null> {
       for (const replaceValue of replaceValues) {
         path[index] = replaceValue;
         url.pathname = path.join('/');

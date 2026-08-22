@@ -32,7 +32,7 @@ A collection of utility bookmarklets for modern browsers (especially Firefox) th
 
 ## 🛠️ Project Structure
 
-``` plaintext
+```plaintext
 src/
 ├── modules/                     # Reusable utility functions
 │   ├── DocumentExtensions.js   # DOM manipulation helpers
@@ -57,13 +57,13 @@ pages/                              # Installation and distribution pages
 
 ### Installation
 
-``` bash
+```bash
 npm install
 ```
 
 ### Build
 
-``` bash
+```bash
 npm run build
 ```
 

@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { extractAmazonAsin, extractYouTubePlaylistId, extractYouTubeVideoId, isNotEmptyString, toAmazon, toCalil } from './IdentifierExtensions.js';
+import {
+  extractAmazonAsin,
+  extractYouTubePlaylistId,
+  extractYouTubeVideoId,
+  isNotEmptyString,
+  toAmazon,
+  toCalil,
+} from './IdentifierExtensions.js';
 
 describe('isNotEmptyString', () => {
   it('returns true for non-empty string', () => {
@@ -22,12 +29,18 @@ describe('isNotEmptyString', () => {
 
 describe('toAmazon', () => {
   it('returns Amazon URL for valid 10-char ASIN', () => {
-    expect(toAmazon('1234567890')).toBe('https://www.amazon.co.jp/dp/1234567890');
-    expect(toAmazon('B0ABCDEFGH')).toBe('https://www.amazon.co.jp/dp/B0ABCDEFGH');
+    expect(toAmazon('1234567890')).toBe(
+      'https://www.amazon.co.jp/dp/1234567890',
+    );
+    expect(toAmazon('B0ABCDEFGH')).toBe(
+      'https://www.amazon.co.jp/dp/B0ABCDEFGH',
+    );
   });
 
   it('trims and uppercases input', () => {
-    expect(toAmazon(' 123456789x ')).toBe('https://www.amazon.co.jp/dp/123456789X');
+    expect(toAmazon(' 123456789x ')).toBe(
+      'https://www.amazon.co.jp/dp/123456789X',
+    );
   });
 
   it('returns null for invalid ASIN', () => {
@@ -44,25 +57,34 @@ describe('extractAmazonAsin', () => {
   it('returns ASIN from rufus-view-context input', () => {
     const document = new DOMParser().parseFromString(
       '<input id="rufus-view-context" value="{&quot;asin&quot;:&quot;B012345678&quot;}">',
-      'text/html');
+      'text/html',
+    );
     expect(extractAmazonAsin(document)).toBe('B012345678');
   });
 
   it('returns null when rufus-view-context has no asin', () => {
     const document = new DOMParser().parseFromString(
       '<input id="rufus-view-context" value="{}">',
-      'text/html');
+      'text/html',
+    );
     expect(extractAmazonAsin(document)).toBeNull();
   });
 
   it('returns ASIN from /dp/:asin pathname', () => {
     const document = new DOMParser().parseFromString('', 'text/html');
-    expect(extractAmazonAsin(document, 'https://www.amazon.co.jp/dp/B012345678')).toBe('B012345678');
+    expect(
+      extractAmazonAsin(document, 'https://www.amazon.co.jp/dp/B012345678'),
+    ).toBe('B012345678');
   });
 
   it('returns ASIN from /gp/product/:asin pathname', () => {
     const document = new DOMParser().parseFromString('', 'text/html');
-    expect(extractAmazonAsin(document, 'https://www.amazon.co.jp/gp/product/B012345678')).toBe('B012345678');
+    expect(
+      extractAmazonAsin(
+        document,
+        'https://www.amazon.co.jp/gp/product/B012345678',
+      ),
+    ).toBe('B012345678');
   });
 
   it('returns null when no ASIN is found', () => {
@@ -77,13 +99,21 @@ describe('extractYouTubeVideoId', () => {
   });
 
   it('returns video id from watch?v=', () => {
-    expect(extractYouTubeVideoId('https://www.youtube.com/watch?v=abc123')).toBe('abc123');
-    expect(extractYouTubeVideoId('https://m.youtube.com/watch?v=abc123')).toBe('abc123');
+    expect(
+      extractYouTubeVideoId('https://www.youtube.com/watch?v=abc123'),
+    ).toBe('abc123');
+    expect(extractYouTubeVideoId('https://m.youtube.com/watch?v=abc123')).toBe(
+      'abc123',
+    );
   });
 
   it('returns video id from shorts', () => {
-    expect(extractYouTubeVideoId('https://www.youtube.com/shorts/abc123')).toBe('abc123');
-    expect(extractYouTubeVideoId('https://m.youtube.com/shorts/abc123')).toBe('abc123');
+    expect(extractYouTubeVideoId('https://www.youtube.com/shorts/abc123')).toBe(
+      'abc123',
+    );
+    expect(extractYouTubeVideoId('https://m.youtube.com/shorts/abc123')).toBe(
+      'abc123',
+    );
   });
 
   it('returns null for non-YouTube URLs', () => {
@@ -98,8 +128,16 @@ describe('extractYouTubeVideoId', () => {
 
 describe('extractYouTubePlaylistId', () => {
   it('returns playlist id from list=', () => {
-    expect(extractYouTubePlaylistId('https://www.youtube.com/watch?v=abc123&list=PLabc')).toBe('PLabc');
-    expect(extractYouTubePlaylistId('https://m.youtube.com/watch?v=abc123&list=PLabc')).toBe('PLabc');
+    expect(
+      extractYouTubePlaylistId(
+        'https://www.youtube.com/watch?v=abc123&list=PLabc',
+      ),
+    ).toBe('PLabc');
+    expect(
+      extractYouTubePlaylistId(
+        'https://m.youtube.com/watch?v=abc123&list=PLabc',
+      ),
+    ).toBe('PLabc');
   });
 
   it('returns null for non-YouTube URLs', () => {
@@ -107,7 +145,9 @@ describe('extractYouTubePlaylistId', () => {
   });
 
   it('returns null when playlist id is missing', () => {
-    expect(extractYouTubePlaylistId('https://www.youtube.com/watch?v=abc123')).toBeNull();
+    expect(
+      extractYouTubePlaylistId('https://www.youtube.com/watch?v=abc123'),
+    ).toBeNull();
   });
 });
 
@@ -121,12 +161,18 @@ describe('toCalil', () => {
   });
 
   it('returns Calil URL for valid 13-digit ISBN', () => {
-    expect(toCalil('9781234567890')).toBe('https://calil.jp/book/9781234567890');
+    expect(toCalil('9781234567890')).toBe(
+      'https://calil.jp/book/9781234567890',
+    );
   });
 
   it('strips hyphens and whitespace', () => {
-    expect(toCalil('978-1-234-56789-0')).toBe('https://calil.jp/book/9781234567890');
-    expect(toCalil('978 1 234 56789 0')).toBe('https://calil.jp/book/9781234567890');
+    expect(toCalil('978-1-234-56789-0')).toBe(
+      'https://calil.jp/book/9781234567890',
+    );
+    expect(toCalil('978 1 234 56789 0')).toBe(
+      'https://calil.jp/book/9781234567890',
+    );
   });
 
   it('uppercases input', () => {

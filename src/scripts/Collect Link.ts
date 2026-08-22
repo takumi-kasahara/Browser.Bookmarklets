@@ -9,8 +9,9 @@ import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
     new Set([
       ...extractUrlsFromSelection(document),
       ...extractUrlsFromSchema(document),
-    ]))
-    .sort(new Intl.Collator(undefined, { numeric: true }).compare);
-  if (urls.length > 0) await copyToClipboard(`Copy ${urls.length} URL(s):`, urls.join('\n'));
+    ]),
+  ).sort(new Intl.Collator(undefined, { numeric: true }).compare);
+  if (urls.length > 0)
+    await copyToClipboard(`Copy ${urls.length} URL(s):`, urls.join('\n'));
   else await copyToClipboard(`Copy ${urls.length} URL(s):`, location.href);
 })();

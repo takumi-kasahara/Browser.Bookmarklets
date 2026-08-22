@@ -8,10 +8,12 @@ import { fileURLToPath } from 'node:url';
   const rootDir = getRootDir();
   const srcDir = path.join(rootDir, 'src', 'scripts');
   const outDir = path.join(rootDir, 'dist');
-  if (fs.existsSync(outDir)) fs.rmSync(outDir, { recursive: true, force: true });
+  if (fs.existsSync(outDir))
+    fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
 
-  const files = fs.readdirSync(srcDir, { recursive: true, withFileTypes: true })
+  const files = fs
+    .readdirSync(srcDir, { recursive: true, withFileTypes: true })
     .filter((x: fs.Dirent): boolean => x.isFile())
     .map((x: fs.Dirent): string => path.join(x.parentPath, x.name))
     .filter((x: string): boolean => !/\.test\.[cm]?[jt]sx?$/.test(x));

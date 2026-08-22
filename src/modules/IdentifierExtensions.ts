@@ -15,7 +15,10 @@ export function isNotEmptyString(value: unknown): value is string {
  * @param {string} [href=location.href]
  * @returns {string | null}
  */
-export function extractAmazonAsin(document: Document, href: string = location.href): string | null {
+export function extractAmazonAsin(
+  document: Document,
+  href: string = location.href,
+): string | null {
   const e = document.querySelector('input#rufus-view-context');
   if (e instanceof HTMLInputElement) {
     try {
@@ -46,7 +49,9 @@ export function extractAmazonAsin(document: Document, href: string = location.hr
  * @param {string} [href=location.href]
  * @returns {string | null}
  */
-export function extractYouTubeVideoId(href: string = location.href): string | null {
+export function extractYouTubeVideoId(
+  href: string = location.href,
+): string | null {
   const url = new URL(href);
   if (url.hostname === 'youtu.be') {
     const id = url.pathname.split('/').at(1);
@@ -66,7 +71,9 @@ export function extractYouTubeVideoId(href: string = location.href): string | nu
  * @param {string} [href=location.href]
  * @returns {string | null}
  */
-export function extractYouTubePlaylistId(href: string = location.href): string | null {
+export function extractYouTubePlaylistId(
+  href: string = location.href,
+): string | null {
   const url = new URL(href);
   if (!is('youtube.com')) return null;
   return url.searchParams.get('list');
@@ -79,7 +86,9 @@ export function extractYouTubePlaylistId(href: string = location.href): string |
 export function toAmazon(value: string | null | undefined): string | null {
   if (!value) return null;
   const cleaned = value.trim().toUpperCase();
-  return /^[A-Z0-9]{10}$/.test(cleaned) ? `https://www.amazon.co.jp/dp/${cleaned}` : null;
+  return /^[A-Z0-9]{10}$/.test(cleaned)
+    ? `https://www.amazon.co.jp/dp/${cleaned}`
+    : null;
 }
 
 /**
@@ -89,7 +98,9 @@ export function toAmazon(value: string | null | undefined): string | null {
 export function toKeepa(value: string | null | undefined): string | null {
   if (!value) return null;
   const cleaned = value.trim().toUpperCase();
-  return /^[A-Z0-9]{10}$/.test(cleaned) ? `https://keepa.com/#!product/5-${cleaned}` : null;
+  return /^[A-Z0-9]{10}$/.test(cleaned)
+    ? `https://keepa.com/#!product/5-${cleaned}`
+    : null;
 }
 
 /**
@@ -99,5 +110,7 @@ export function toKeepa(value: string | null | undefined): string | null {
 export function toCalil(value: string | null | undefined): string | null {
   if (!value) return null;
   const cleaned = value.replaceAll(/[-\s]/g, '').toUpperCase();
-  return /^\d{9}(?:\d|X)$|^\d{13}$/.test(cleaned) ? `https://calil.jp/book/${cleaned}` : null;
+  return /^\d{9}(?:\d|X)$|^\d{13}$/.test(cleaned)
+    ? `https://calil.jp/book/${cleaned}`
+    : null;
 }

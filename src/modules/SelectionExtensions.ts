@@ -9,7 +9,9 @@ import { toAmazon, toCalil } from './IdentifierExtensions.js';
 export function extractUrlsFromSelection(document: Document): string[] {
   const selection = document.getSelection?.();
   if (!selection) return [];
-  const ranges = Array.from({ length: selection.rangeCount }, (_, i) => selection.getRangeAt(i));
+  const ranges = Array.from({ length: selection.rangeCount }, (_, i) =>
+    selection.getRangeAt(i),
+  );
   return ranges.flatMap(r => {
     const contents = r.cloneContents();
     const walker = document.createTreeWalker(contents, NodeFilter.SHOW_ELEMENT);

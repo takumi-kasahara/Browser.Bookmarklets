@@ -9,16 +9,10 @@ export default [
   pluginJs.configs.recommended,
   stylistic.configs.recommended,
   {
-    ignores: [
-      'coverage',
-      'dist',
-      'node_modules',
-    ],
+    ignores: ['coverage', 'dist', 'node_modules'],
   },
   {
-    files: [
-      '**/*.html',
-    ],
+    files: ['**/*.html'],
     languageOptions: {
       parser: htmlParser,
     },
@@ -33,14 +27,11 @@ export default [
     },
   },
   {
-    files: [
-      '**/*.js',
-      '**/*.mjs',
-    ],
+    files: ['**/*.js', '**/*.mjs'],
     rules: {
       '@stylistic/arrow-parens': ['error', 'as-needed'],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
-      '@stylistic/no-multi-spaces': ['error', { 'ignoreEOLComments': true }],
+      '@stylistic/no-multi-spaces': ['error', { ignoreEOLComments: true }],
       '@stylistic/quote-props': ['error', 'consistent'],
       '@stylistic/semi': ['error', 'always'],
       'consistent-return': 'error',
@@ -53,9 +44,7 @@ export default [
     },
   },
   {
-    files: [
-      '**/*.ts',
-    ],
+    files: ['**/*.ts'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -66,13 +55,22 @@ export default [
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
-      '@typescript-eslint/consistent-type-imports': ['error', { 'prefer': 'type-imports' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports' },
+      ],
       '@stylistic/arrow-parens': ['error', 'as-needed'],
       '@stylistic/comma-dangle': ['error', 'always-multiline'],
       '@stylistic/max-statements-per-line': 'off',
-      '@stylistic/member-delimiter-style': ['error', { 'multiline': { 'delimiter': 'semi' } }],
-      '@stylistic/no-multi-spaces': ['error', { 'ignoreEOLComments': true }],
+      '@stylistic/member-delimiter-style': [
+        'error',
+        { multiline: { delimiter: 'semi' } },
+      ],
+      '@stylistic/no-multi-spaces': ['error', { ignoreEOLComments: true }],
       '@stylistic/quote-props': ['error', 'consistent'],
       '@stylistic/semi': ['error', 'always'],
       'consistent-return': 'error',
@@ -83,19 +81,14 @@ export default [
     },
   },
   {
-    files: [
-      '.tools/*.ts',
-    ],
+    files: ['.tools/*.ts'],
     languageOptions: {
       globals: globals.node,
       sourceType: 'module',
     },
   },
   {
-    files: [
-      'src/**/*.ts',
-      'tests/**/*.ts',
-    ],
+    files: ['src/**/*.ts', 'tests/**/*.ts'],
     languageOptions: {
       globals: {
         ...globals.browser,

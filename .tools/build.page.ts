@@ -15,11 +15,7 @@ interface Bookmarklet {
   const distRoot = path.join(rootDir, 'dist');
   const outputPath = path.join(rootDir, 'pages', 'Bookmarklets.html');
   const bookmarklets = collectBookmarklets(distRoot);
-  fs.writeFileSync(
-    outputPath,
-    generate(bookmarklets),
-    'utf-8',
-  );
+  fs.writeFileSync(outputPath, generate(bookmarklets), 'utf-8');
   console.debug('created:', outputPath);
 
   function getRootDir(): string {
@@ -44,8 +40,7 @@ interface Bookmarklet {
     return bookmarklets.sort((a: Bookmarklet, b: Bookmarklet): number => {
       const aHasFolder = a.path.includes(path.sep) ? 1 : 0;
       const bHasFolder = b.path.includes(path.sep) ? 1 : 0;
-      if (aHasFolder !== bHasFolder)
-        return aHasFolder - bHasFolder;
+      if (aHasFolder !== bHasFolder) return aHasFolder - bHasFolder;
 
       return a.name.localeCompare(b.name);
     });
@@ -67,11 +62,15 @@ interface Bookmarklet {
 </head>
 <body>
 <ul>
-${bookmarklets.map(b => `<li>
+${bookmarklets
+    .map(
+      b => `<li>
 <a href="${b.href}">
 ${escape(b.name)}
 </a>
-</li>`).join('\n')}
+</li>`,
+    )
+    .join('\n')}
 </ul>
 </body>
 </html>

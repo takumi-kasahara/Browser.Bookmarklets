@@ -1,4 +1,11 @@
-import { extractAmazonAsin, extractYouTubePlaylistId, extractYouTubeVideoId, isNotEmptyString, toCalil, toKeepa } from '../modules/IdentifierExtensions.js';
+import {
+  extractAmazonAsin,
+  extractYouTubePlaylistId,
+  extractYouTubeVideoId,
+  isNotEmptyString,
+  toCalil,
+  toKeepa,
+} from '../modules/IdentifierExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
 import { extractUrlsFromSelectionText } from '../modules/SelectionExtensions.js';
 import { is, open } from '../modules/WindowExtensions.js';
@@ -17,7 +24,8 @@ import { is, open } from '../modules/WindowExtensions.js';
       ...ifRakuten(),
       ...ifSteam(),
       ...ifYouTube(),
-    ]))
+    ]),
+  )
     .filter(isNotEmptyString)
     .filter(url => url !== location.href)
     .sort(new Intl.Collator(undefined, { numeric: true }).compare);
@@ -34,7 +42,9 @@ import { is, open } from '../modules/WindowExtensions.js';
   function ifDLsite(): string[] {
     if (!is('dlsite.com')) return [];
     const origin = 'https://dlwatcher.com';
-    const product_id = document.querySelector('#work_buy_box_wrapper > [data-product_id]');
+    const product_id = document.querySelector(
+      '#work_buy_box_wrapper > [data-product_id]',
+    );
     if (product_id instanceof HTMLElement)
       return [`${origin}/product/${product_id.dataset.product_id}`];
     const maker_id = document.querySelector('#main_inner [data-follow-key]');
@@ -45,24 +55,34 @@ import { is, open } from '../modules/WindowExtensions.js';
   function ifPixiv(): string[] {
     if (!is('pixiv.net')) return [];
     if (location.pathname === '/history.php') {
-      const ids = performance.getEntriesByType('resource')
+      const ids = performance
+        .getEntriesByType('resource')
         .filter(e => e instanceof PerformanceResourceTiming)
         .filter(e => e.initiatorType === 'fetch')
         .sort((a, b) => b.responseEnd - a.responseEnd)
         .map(e => new URL(e.name))
-        .filter(u => u.origin === location.origin && u.pathname === '/ajax/illust/detail')
+        .filter(
+          u =>
+            u.origin === location.origin
+            && u.pathname === '/ajax/illust/detail',
+        )
         .map(u => u.searchParams.get('illust_ids'))
         .find(Boolean);
       if (!ids) return [];
-      return ids.split(',')
+      return ids
+        .split(',')
         .filter(Boolean)
         .map(id => `https://www.pixiv.net/artworks/${id}`);
     }
     if (location.pathname === '/ranking.php')
-      return Array.from(document.querySelectorAll('.ranking-image-item > a.work'))
+      return Array.from(
+        document.querySelectorAll('.ranking-image-item > a.work'),
+      )
         .filter(e => e instanceof HTMLAnchorElement)
         .map(a => a.href);
-    return Array.from(document.querySelectorAll('a[data-gtm-value][data-gtm-user-id]'))
+    return Array.from(
+      document.querySelectorAll('a[data-gtm-value][data-gtm-user-id]'),
+    )
       .filter(e => e instanceof HTMLAnchorElement)
       .filter(a => a.origin === location.origin)
       .map(a => a.href);

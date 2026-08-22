@@ -1,5 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { extractUrlsFromSelection, extractUrlsFromSelectionText } from './SelectionExtensions.js';
+import {
+  extractUrlsFromSelection,
+  extractUrlsFromSelectionText,
+} from './SelectionExtensions.js';
 
 describe('extractUrlsFromSelection', () => {
   beforeEach(() => {
@@ -42,7 +45,9 @@ describe('extractUrlsFromSelection', () => {
     const selection = window.getSelection()!;
     selection.removeAllRanges();
     selection.addRange(range);
-    expect(extractUrlsFromSelection(document)).toEqual(['https://example.com/inside']);
+    expect(extractUrlsFromSelection(document)).toEqual([
+      'https://example.com/inside',
+    ]);
   });
 });
 

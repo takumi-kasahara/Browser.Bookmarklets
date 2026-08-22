@@ -1,6 +1,6 @@
 ---
 name: typescript-browser-scripts
-description: 'TypeScript coding conventions for browser bookmarklet source and build scripts. Use when writing or editing *.ts files in src/ or .tools/ for bookmarklets, user scripts, or user styles — covers ES module style, variable/function naming, JSDoc, and array iteration patterns.'
+description: "TypeScript coding conventions for browser bookmarklet source and build scripts. Use when writing or editing *.ts files in src/ or .tools/ for bookmarklets, user scripts, or user styles — covers ES module style, variable/function naming, JSDoc, and array iteration patterns."
 license: Complete terms in LICENSE.txt
 ---
 
@@ -45,10 +45,10 @@ Coding conventions for authoring browser bookmarklets, Greasemonkey user scripts
  * @param {string} text
  */
 export function createAnchorElement(url: string, text: string): string {
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   a.href = url;
-  a.rel = 'noreferrer';
-  a.target = '_blank';
+  a.rel = "noreferrer";
+  a.target = "_blank";
   // @ts-expect-error - setHTML is not in the current @types/web DOM lib
   a.setHTML(text ? text : url);
   return a.outerHTML;

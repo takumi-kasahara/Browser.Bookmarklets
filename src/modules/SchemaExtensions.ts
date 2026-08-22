@@ -10,19 +10,34 @@ import { extractObjects, tryParse } from './JsonExtensions.js';
 export function extractUrlsFromSchema(document: Document): string[] {
   const collection = new Set<string>();
   const addAll = (urls: string[]) => {
-    for (const url of urls)
-      if (url) collection.add(url);
+    for (const url of urls) if (url) collection.add(url);
   };
 
-  const urlFromMicrodata = [document.documentElement, ...document.querySelectorAll('[itemscope]')]
-    .flatMap(e => fromElement(extractElement(e, 'itemscope', 'itemprop'), e.getAttribute('itemtype') ?? ''));
+  const urlFromMicrodata = [
+    document.documentElement,
+    ...document.querySelectorAll('[itemscope]'),
+  ].flatMap(e =>
+    fromElement(
+      extractElement(e, 'itemscope', 'itemprop'),
+      e.getAttribute('itemtype') ?? '',
+    ),
+  );
   if (urlFromMicrodata.length > 0) addAll(urlFromMicrodata);
 
-  const urlFromRDFa = [document.documentElement, ...document.querySelectorAll('[typeof]')]
-    .flatMap(e => fromElement(extractElement(e, 'typeof', 'property'), e.getAttribute('typeof') ?? ''));
+  const urlFromRDFa = [
+    document.documentElement,
+    ...document.querySelectorAll('[typeof]'),
+  ].flatMap(e =>
+    fromElement(
+      extractElement(e, 'typeof', 'property'),
+      e.getAttribute('typeof') ?? '',
+    ),
+  );
   if (urlFromRDFa.length > 0) addAll(urlFromRDFa);
 
-  const urlFromLD = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
+  const urlFromLD = Array.from(
+    document.querySelectorAll('script[type="application/ld+json"]'),
+  )
     .flatMap(e => extractObjects(tryParse(e.textContent?.trim() ?? '')))
     .flatMap(d => fromJson(d));
   if (urlFromLD.length > 0) addAll(urlFromLD);
@@ -34,7 +49,10 @@ export function extractUrlsFromSchema(document: Document): string[] {
    * @param {string} type
    * @returns {string[]}
    */
-  function fromElement(data: Record<string, unknown> | null, type: string): string[] {
+  function fromElement(
+    data: Record<string, unknown> | null,
+    type: string,
+  ): string[] {
     if (!data) return [];
     const values = new Set<string>();
     switch (type) {
@@ -49,17 +67,17 @@ export function extractUrlsFromSchema(document: Document): string[] {
    */
   function fromJson(data: Record<string, unknown>): string[] {
     const values = new Set<string>();
-    if (Object.hasOwn(data, 'url'))
-      values.add(String(data.url));
+    if (Object.hasOwn(data, 'url')) values.add(String(data.url));
     if (Object.hasOwn(data, 'identifier'))
       if (location.origin === 'https://x.com')
         values.add(`${location.origin}/i/user/${String(data.identifier)}`);
     if (Object.hasOwn(data, '@type'))
-      for (const type of Array.isArray(data['@type']) ? data['@type'] : [data['@type']])
+      for (const type of Array.isArray(data['@type'])
+        ? data['@type']
+        : [data['@type']])
         switch (type) {
           case 'VideoObject':
-            if (Object.hasOwn(data, '@id'))
-              values.add(String(data['@id']));
+            if (Object.hasOwn(data, '@id')) values.add(String(data['@id']));
         }
     return values.size > 0 ? Array.from(values).filter(Boolean) : [];
   }
@@ -74,21 +92,38 @@ export function extractUrlsFromSchema(document: Document): string[] {
 export function extractIdsFromSchema(document: Document): string[] {
   const collection = new Set<string>();
   const addAll = (ids: string[]) => {
-    for (const id of ids)
-      if (id) collection.add(id);
+    for (const id of ids) if (id) collection.add(id);
   };
 
-  const idFromMicrodata = [document.documentElement, ...document.querySelectorAll('[itemscope]')]
+  const idFromMicrodata = [
+    document.documentElement,
+    ...document.querySelectorAll('[itemscope]'),
+  ]
     .filter((e): e is HTMLElement => e instanceof HTMLElement)
-    .flatMap(e => fromElement(extractElement(e, 'itemscope', 'itemprop'), e.getAttribute('itemtype') ?? ''));
+    .flatMap(e =>
+      fromElement(
+        extractElement(e, 'itemscope', 'itemprop'),
+        e.getAttribute('itemtype') ?? '',
+      ),
+    );
   if (idFromMicrodata.length > 0) addAll(idFromMicrodata);
 
-  const idFromRDFa = [document.documentElement, ...document.querySelectorAll('[typeof]')]
+  const idFromRDFa = [
+    document.documentElement,
+    ...document.querySelectorAll('[typeof]'),
+  ]
     .filter((e): e is HTMLElement => e instanceof HTMLElement)
-    .flatMap(e => fromElement(extractElement(e, 'typeof', 'property'), e.getAttribute('typeof') ?? ''));
+    .flatMap(e =>
+      fromElement(
+        extractElement(e, 'typeof', 'property'),
+        e.getAttribute('typeof') ?? '',
+      ),
+    );
   if (idFromRDFa.length > 0) addAll(idFromRDFa);
 
-  const idFromLD = Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
+  const idFromLD = Array.from(
+    document.querySelectorAll('script[type="application/ld+json"]'),
+  )
     .flatMap(e => extractObjects(tryParse(e.textContent?.trim() ?? '')))
     .flatMap(d => fromJson(d));
   if (idFromLD.length > 0) addAll(idFromLD);
@@ -100,7 +135,10 @@ export function extractIdsFromSchema(document: Document): string[] {
    * @param {string} type
    * @returns {string[]}
    */
-  function fromElement(data: Record<string, unknown> | null, type: string): string[] {
+  function fromElement(
+    data: Record<string, unknown> | null,
+    type: string,
+  ): string[] {
     if (!data) return [];
     const values = new Set<string>();
     switch (type) {

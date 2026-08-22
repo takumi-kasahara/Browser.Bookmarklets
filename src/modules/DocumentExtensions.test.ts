@@ -1,5 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { collectAnchorElements, createAnchorElement, sleep, waitForElement } from './DocumentExtensions.js';
+import {
+  collectAnchorElements,
+  createAnchorElement,
+  sleep,
+  waitForElement,
+} from './DocumentExtensions.js';
 
 describe('createAnchorElement', () => {
   it('renders an anchor with href, rel, and target', () => {
@@ -42,7 +47,11 @@ describe('collectAnchorElements', () => {
     const a2 = document.createElement('a');
     a2.href = 'https://other.com/b';
     document.body.append(a1, a2);
-    const result = collectAnchorElements(document.body, 'https://example.com', false);
+    const result = collectAnchorElements(
+      document.body,
+      'https://example.com',
+      false,
+    );
     expect(result.length).toBe(1);
     expect(result[0].href).toBe('https://other.com/b');
     document.body.innerHTML = '';
@@ -50,7 +59,9 @@ describe('collectAnchorElements', () => {
 
   it('returns empty array when no anchors match', () => {
     document.body.innerHTML = '<p>no links</p>';
-    expect(collectAnchorElements(document.body, 'https://example.com/')).toEqual([]);
+    expect(
+      collectAnchorElements(document.body, 'https://example.com/'),
+    ).toEqual([]);
   });
 });
 
