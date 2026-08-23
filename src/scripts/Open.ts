@@ -7,7 +7,7 @@ import {
   toKeepa,
 } from '../modules/IdentifierExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
-import { extractUrlsFromSelectionText } from '../modules/SelectionExtensions.js';
+import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
 import { is, open } from '../modules/WindowExtensions.js';
 
 (async () => {
@@ -16,7 +16,7 @@ import { is, open } from '../modules/WindowExtensions.js';
   const path = location.pathname.split('/');
   const urls = Array.from(
     new Set([
-      ...extractUrlsFromSelectionText(document),
+      ...extractUrlsFromSelection(document),
       ...extractUrlsFromSchema(document),
       ...ifAmazon(),
       ...ifDLsite(),

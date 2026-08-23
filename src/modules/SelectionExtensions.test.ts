@@ -1,8 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import {
-  extractUrlsFromSelection,
-  extractUrlsFromSelectionText,
-} from './SelectionExtensions.js';
+import { extractUrlsFromSelection } from './SelectionExtensions.js';
 
 describe('extractUrlsFromSelection', () => {
   beforeEach(() => {
@@ -58,7 +55,7 @@ describe('extractUrlsFromSelectionText', () => {
   });
 
   it('returns empty array when nothing selected', () => {
-    expect(extractUrlsFromSelectionText(document)).toEqual([]);
+    expect(extractUrlsFromSelection(document)).toEqual([]);
   });
 
   it('converts selected ASIN text to Amazon URL', () => {
@@ -68,7 +65,7 @@ describe('extractUrlsFromSelectionText', () => {
     range.selectNodeContents(document.body);
     selection.addRange(range);
     selection.toString = () => 'B0ABCDEFGH';
-    expect(extractUrlsFromSelectionText(document)).toEqual([
+    expect(extractUrlsFromSelection(document)).toEqual([
       'https://www.amazon.co.jp/dp/B0ABCDEFGH',
     ]);
   });
@@ -80,7 +77,7 @@ describe('extractUrlsFromSelectionText', () => {
     range.selectNodeContents(document.body);
     selection.addRange(range);
     selection.toString = () => '9781234567890';
-    expect(extractUrlsFromSelectionText(document)).toEqual([
+    expect(extractUrlsFromSelection(document)).toEqual([
       'https://calil.jp/book/9781234567890',
     ]);
   });
@@ -92,6 +89,6 @@ describe('extractUrlsFromSelectionText', () => {
     range.selectNodeContents(document.body);
     selection.addRange(range);
     selection.toString = () => 'hello world';
-    expect(extractUrlsFromSelectionText(document)).toEqual([]);
+    expect(extractUrlsFromSelection(document)).toEqual([]);
   });
 });
