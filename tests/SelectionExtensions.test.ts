@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { extractUrlsFromSelection } from './SelectionExtensions.js';
+import { extractUrlsFromSelection } from '../src/modules/SelectionExtensions.js';
 
 describe('extractUrlsFromSelection', () => {
   beforeEach(() => {

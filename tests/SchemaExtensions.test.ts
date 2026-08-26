@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import {
   extractIdsFromSchema,
   extractUrlsFromSchema,
-} from './SchemaExtensions.js';
+} from '../src/modules/SchemaExtensions.js';
 
 function setDocument(html: string): void {
   document.documentElement.innerHTML = html;

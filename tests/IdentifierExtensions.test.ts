@@ -6,7 +6,7 @@ import {
   isNotEmptyString,
   toAmazon,
   toCalil,
-} from './IdentifierExtensions.js';
+} from '../src/modules/IdentifierExtensions.js';
 
 describe('isNotEmptyString', () => {
   it('returns true for non-empty string', () => {
