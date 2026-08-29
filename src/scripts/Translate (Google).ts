@@ -15,11 +15,7 @@ import { is } from '../modules/WindowExtensions.js';
   else if (location.hostname === 'translate.google.com') return;
   else if (is('translate.goog')) return;
   else if (!/https?:/.test(location.protocol))
-    window.open(
-      `https://translate.google.com/?sl=auto&tl=ja&op=translate}`,
-      '_blank',
-      'noreferrer',
-    );
+    location.href = 'https://translate.google.com/?sl=auto&tl=ja&op=translate';
   else if (!document.querySelector('html[lang|=ja]'))
     window.open(
       `https://translate.google.com/translate?sl=auto&tl=ja&u=${location.href}`,
