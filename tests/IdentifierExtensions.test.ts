@@ -45,8 +45,6 @@ describe('toAmazon', () => {
 
   it('returns null for invalid ASIN', () => {
     expect(toAmazon('')).toBeNull();
-    expect(toAmazon(null)).toBeNull();
-    expect(toAmazon(undefined)).toBeNull();
     expect(toAmazon('123456789')).toBeNull();
     expect(toAmazon('12345678901')).toBeNull();
     expect(toAmazon('123456789A1')).toBeNull();
@@ -181,8 +179,6 @@ describe('toCalil', () => {
 
   it('returns null for invalid ISBN', () => {
     expect(toCalil('')).toBeNull();
-    expect(toCalil(null)).toBeNull();
-    expect(toCalil(undefined)).toBeNull();
     expect(toCalil('123456789')).toBeNull();
     expect(toCalil('978123456789')).toBeNull();
     expect(toCalil('ABCDEFGHIJ')).toBeNull();

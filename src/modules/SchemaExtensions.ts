@@ -1,4 +1,5 @@
 import { extractElement } from './HtmlExtensions.js';
+import { toAmazon, toCalil } from './IdentifierExtensions.js';
 import { extractObjects, tryParse } from './JsonExtensions.js';
 
 /**
@@ -57,7 +58,21 @@ export function extractUrlsFromSchema(document: Document): string[] {
     const values = new Set<string>();
     switch (type) {
       default:
-      // no-op
+        /** @see {@link https://schema.org/asin} */
+        if (Object.hasOwn(data, 'asin'))
+          values.add(String(toAmazon(String(data['asin']))));
+        /** @see {@link https://schema.org/isbn} */
+        if (Object.hasOwn(data, 'isbn'))
+          values.add(String(toCalil(String(data['isbn']))));
+        /** @see {@link https://schema.org/gtin} */
+        if (Object.hasOwn(data, 'gtin'))
+          values.add(String(toCalil(String(data['gtin']))));
+        /** @see {@link https://schema.org/gtin13} */
+        if (Object.hasOwn(data, 'gtin13'))
+          values.add(String(toCalil(String(data['gtin13']))));
+        /** @see {@link https://ogp.me/#type_book} */
+        if (Object.hasOwn(data, 'books:isbn'))
+          values.add(String(toCalil(String(data['books:isbn']))));
     }
     return values.size > 0 ? Array.from(values).filter(Boolean) : [];
   }
@@ -79,6 +94,20 @@ export function extractUrlsFromSchema(document: Document): string[] {
           case 'VideoObject':
             if (Object.hasOwn(data, '@id')) values.add(String(data['@id']));
         }
+    if (Object.hasOwn(data, 'asin'))
+      values.add(String(toAmazon(String(data['asin']))));
+    /** @see {@link https://schema.org/isbn} */
+    if (Object.hasOwn(data, 'isbn'))
+      values.add(String(toCalil(String(data['isbn']))));
+    /** @see {@link https://schema.org/gtin} */
+    if (Object.hasOwn(data, 'gtin'))
+      values.add(String(toCalil(String(data['gtin']))));
+    /** @see {@link https://schema.org/gtin13} */
+    if (Object.hasOwn(data, 'gtin13'))
+      values.add(String(toCalil(String(data['gtin13']))));
+    /** @see {@link https://ogp.me/#type_book} */
+    if (Object.hasOwn(data, 'books:isbn'))
+      values.add(String(toCalil(String(data['books:isbn']))));
     return values.size > 0 ? Array.from(values).filter(Boolean) : [];
   }
 }
@@ -143,10 +172,19 @@ export function extractIdsFromSchema(document: Document): string[] {
     const values = new Set<string>();
     switch (type) {
       default:
-        if (Object.hasOwn(data, 'identifier')) {
-          const identifier = data['identifier'];
-          values.add(String(identifier));
-        }
+        if (Object.hasOwn(data, 'identifier'))
+          values.add(String(data['identifier']));
+        /** @see {@link https://schema.org/asin} */
+        if (Object.hasOwn(data, 'asin')) values.add(String(data['asin']));
+        /** @see {@link https://schema.org/isbn} */
+        if (Object.hasOwn(data, 'isbn')) values.add(String(data['isbn']));
+        /** @see {@link https://schema.org/gtin} */
+        if (Object.hasOwn(data, 'gtin')) values.add(String(data['gtin']));
+        /** @see {@link https://schema.org/gtin13} */
+        if (Object.hasOwn(data, 'gtin13')) values.add(String(data['gtin13']));
+        /** @see {@link https://ogp.me/#type_book} */
+        if (Object.hasOwn(data, 'books:isbn'))
+          values.add(String(data['books:isbn']));
     }
     return values.size > 0 ? Array.from(values).filter(Boolean) : [];
   }
@@ -156,10 +194,21 @@ export function extractIdsFromSchema(document: Document): string[] {
    */
   function fromJson(data: Record<string, unknown>): string[] {
     const values = new Set<string>();
-    if (Object.hasOwn(data, 'identifier')) {
-      const identifier = data['identifier'];
-      values.add(String(identifier));
-    }
+    if (Object.hasOwn(data, 'identifier'))
+      values.add(String(data['identifier']));
+    if (Object.hasOwn(data, 'identifier'))
+      values.add(String(data['identifier']));
+    /** @see {@link https://schema.org/asin} */
+    if (Object.hasOwn(data, 'asin')) values.add(String(data['asin']));
+    /** @see {@link https://schema.org/isbn} */
+    if (Object.hasOwn(data, 'isbn')) values.add(String(data['isbn']));
+    /** @see {@link https://schema.org/gtin} */
+    if (Object.hasOwn(data, 'gtin')) values.add(String(data['gtin']));
+    /** @see {@link https://schema.org/gtin13} */
+    if (Object.hasOwn(data, 'gtin13')) values.add(String(data['gtin13']));
+    /** @see {@link https://ogp.me/#type_book} */
+    if (Object.hasOwn(data, 'books:isbn'))
+      values.add(String(data['books:isbn']));
     return values.size > 0 ? Array.from(values).filter(Boolean) : [];
   }
 }

@@ -80,10 +80,10 @@ export function extractYouTubePlaylistId(
 }
 
 /**
- * @param {string | null | undefined} value
+ * @param {string} value
  * @returns {string | null}
  */
-export function toAmazon(value: string | null | undefined): string | null {
+export function toAmazon(value: string): string | null {
   if (!value) return null;
   const cleaned = value.trim().toUpperCase();
   return /^[A-Z0-9]{10}$/.test(cleaned)
@@ -92,10 +92,10 @@ export function toAmazon(value: string | null | undefined): string | null {
 }
 
 /**
- * @param {string | null | undefined} value
+ * @param {string} value
  * @returns {string | null}
  */
-export function toKeepa(value: string | null | undefined): string | null {
+export function toKeepa(value: string): string | null {
   if (!value) return null;
   const cleaned = value.trim().toUpperCase();
   return /^[A-Z0-9]{10}$/.test(cleaned)
@@ -104,10 +104,10 @@ export function toKeepa(value: string | null | undefined): string | null {
 }
 
 /**
- * @param {string | null | undefined} value
+ * @param {string} value
  * @returns {string | null}
  */
-export function toCalil(value: string | null | undefined): string | null {
+export function toCalil(value: string): string | null {
   if (!value) return null;
   const cleaned = value.replaceAll(/[-\s]/g, '').toUpperCase();
   return /^\d{9}(?:\d|X)$|^\d{13}$/.test(cleaned)
