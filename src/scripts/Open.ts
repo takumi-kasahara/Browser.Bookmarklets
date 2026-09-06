@@ -27,6 +27,15 @@ import { is, open } from '../modules/WindowExtensions.js';
     ]),
   )
     .filter(isNotEmptyString)
+    .map(href => {
+      const url = new URL(href);
+      if (
+        url.hostname === location.hostname
+        && url.protocol !== location.protocol
+      )
+        url.protocol = location.protocol;
+      return url.href;
+    })
     .filter(url => url !== location.href)
     .sort(new Intl.Collator(undefined, { numeric: true }).compare);
   if (urls.length > 0) await open(urls);
