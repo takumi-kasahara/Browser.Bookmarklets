@@ -2,6 +2,7 @@ import { collectAnchorElements } from '../modules/DocumentExtensions.js';
 import { isNotEmptyString } from '../modules/IdentifierExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
+import { equiv } from '../modules/WindowExtensions.js';
 
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
@@ -18,6 +19,7 @@ import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
     ]),
   )
     .filter(isNotEmptyString)
+    .filter(href => !equiv(location, href))
     .filter(href => {
       try {
         return /https?:/.test(new URL(href).protocol);
