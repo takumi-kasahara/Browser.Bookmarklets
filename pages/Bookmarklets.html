@@ -85,9 +85,16 @@
       </li>
       <li>
         <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22duckduckgo.com%22)return%3Blet%20o%3Dnew%20URL(%22https%3A%2F%2Fduckduckgo.com%2F%22)%3Bo.searchParams.set(%22q%22%2C%60site%3A%24%7Blocation.hostname%7D%60)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
+        >
+          Search
+        </a>
+      </li>
+      <li>
+        <a
           href="javascript:%22use%20strict%22%3B(()%3D%3E%7B%2Fhttps%3F%3A%2F.test(location.protocol)%26%26location.hostname!%3D%3D%22web.archive.org%22%26%26window.open(%60https%3A%2F%2Fweb.archive.org%2Fweb%2F*%2F%24%7Blocation.origin%7D%2F*%60%2C%22_blank%22%2C%22noreferrer%22)%3B%7D)()%3B"
         >
-          Search Archive
+          Search Archive (origin)
         </a>
       </li>
       <li>
@@ -101,26 +108,19 @@
         <a
           href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22x.com%22)return%3Blet%20o%3Dnew%20URL(%22https%3A%2F%2Fx.com%2Fsearch%22)%3Bo.searchParams.set(%22q%22%2C%60url%3A%24%7Blocation.hostname%7D%60)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
         >
-          Search Post
+          Search Post (origin)
         </a>
       </li>
       <li>
         <a
-          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22x.com%22)return%3Blet%20o%3Dnew%20URL(%22https%3A%2F%2Fx.com%2Fsearch%22)%3Bo.searchParams.set(%22q%22%2C%60%22%24%7Blocation.href%7D%22%60)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22x.com%22)return%3Blet%20o%3Dnew%20URL(%22https%3A%2F%2Fx.com%2Fsearch%22)%3Bo.searchParams.set(%22q%22%2Clocation.href)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
         >
           Search Post (url)
         </a>
       </li>
       <li>
         <a
-          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22duckduckgo.com%22)return%3Blet%20o%3Dnew%20URL(%22https%3A%2F%2Fduckduckgo.com%2F%22)%3Bo.searchParams.set(%22q%22%2C%60site%3A%24%7Blocation.hostname%7D%60)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
-        >
-          Search Site
-        </a>
-      </li>
-      <li>
-        <a
-          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22x.com%22)return%3Blet%20n%3Ddocument.querySelector('link%5Brel%3D%22canonical%22%5D')%2Ct%3Dn%20instanceof%20HTMLLinkElement%3Fn.href%3Alocation.href%2Co%3Dnew%20URL(%22https%3A%2F%2Fx.com%2Fintent%2Fcompose%22)%3Bo.searchParams.set(%22url%22%2Ct)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2Fhttps%3F%3A%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22x.com%22)return%3Blet%20n%3Ddocument.querySelector('link%5Brel%3D%22canonical%22%5D')%2Ce%3Dn%20instanceof%20HTMLLinkElement%3Fn.href%3Alocation.href%2Ct%3Dnew%20URL(%22https%3A%2F%2Fx.com%2Fintent%2Ftweet%22)%3Bt.searchParams.set(%22url%22%2Ce)%2Cwindow.open(t%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
         >
           Share
         </a>
