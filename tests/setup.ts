@@ -59,3 +59,22 @@ if (
     },
   });
 }
+
+// jsdom lacks Range.intersectsNode; emulate it by checking whether the node
+// overlaps the range's start/end container boundaries.
+if (typeof Range.prototype.intersectsNode !== 'function') {
+  Range.prototype.intersectsNode = function intersectsNode(
+    node: Node,
+  ): boolean {
+    const compare = (a: Node, b: Node): number => {
+      const position = a.compareDocumentPosition(b);
+      if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+      if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+      return 0;
+    };
+
+    const start = this.startContainer;
+    const end = this.endContainer;
+    return compare(node, end) <= 0 && compare(node, start) >= 0;
+  };
+}

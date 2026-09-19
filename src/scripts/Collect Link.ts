@@ -1,7 +1,7 @@
-import { collectAnchorElements } from '../modules/DocumentExtensions.js';
 import { isNotEmptyString } from '../modules/IdentifierExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
+import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
 import { equiv } from '../modules/WindowExtensions.js';
 
 (async () => {
@@ -9,13 +9,8 @@ import { equiv } from '../modules/WindowExtensions.js';
 
   const urls = Array.from(
     new Set([
+      ...extractUrlsFromSelection(document),
       ...extractUrlsFromSchema(document),
-      ...collectAnchorElements(document.body, location.origin, true).map(
-        e => e.href,
-      ),
-      ...collectAnchorElements(document.body, location.origin, false).map(
-        e => e.href,
-      ),
     ]),
   )
     .filter(isNotEmptyString)
