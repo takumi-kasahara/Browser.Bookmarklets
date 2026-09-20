@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "build": "npm run build:minify && npm run build:page && npm run lint",
     "build:minify": "node --experimental-strip-types .tools/build.minify.ts",
