@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   extractAmazonAsin,
   extractYouTubePlaylistId,
@@ -92,25 +92,33 @@ describe('extractAmazonAsin', () => {
 });
 
 describe('extractYouTubeVideoId', () => {
+  beforeEach(() => {
+    vi.stubGlobal('location', new URL('https://www.youtube.com/'));
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it('returns video id from youtu.be', () => {
-    expect(extractYouTubeVideoId('https://youtu.be/abc123')).toBe('abc123');
+    expect(extractYouTubeVideoId('https://youtu.be/foo')).toBe('foo');
   });
 
   it('returns video id from watch?v=', () => {
-    expect(
-      extractYouTubeVideoId('https://www.youtube.com/watch?v=abc123'),
-    ).toBe('abc123');
-    expect(extractYouTubeVideoId('https://m.youtube.com/watch?v=abc123')).toBe(
-      'abc123',
+    expect(extractYouTubeVideoId('https://www.youtube.com/watch?v=foo')).toBe(
+      'foo',
+    );
+    expect(extractYouTubeVideoId('https://m.youtube.com/watch?v=foo')).toBe(
+      'foo',
     );
   });
 
   it('returns video id from shorts', () => {
-    expect(extractYouTubeVideoId('https://www.youtube.com/shorts/abc123')).toBe(
-      'abc123',
+    expect(extractYouTubeVideoId('https://www.youtube.com/shorts/foo')).toBe(
+      'foo',
     );
-    expect(extractYouTubeVideoId('https://m.youtube.com/shorts/abc123')).toBe(
-      'abc123',
+    expect(extractYouTubeVideoId('https://m.youtube.com/shorts/foo')).toBe(
+      'foo',
     );
   });
 
@@ -125,17 +133,21 @@ describe('extractYouTubeVideoId', () => {
 });
 
 describe('extractYouTubePlaylistId', () => {
+  beforeEach(() => {
+    vi.stubGlobal('location', new URL('https://www.youtube.com/'));
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it('returns playlist id from list=', () => {
     expect(
-      extractYouTubePlaylistId(
-        'https://www.youtube.com/watch?v=abc123&list=PLabc',
-      ),
-    ).toBe('PLabc');
+      extractYouTubePlaylistId('https://www.youtube.com/watch?v=foo&list=bar'),
+    ).toBe('bar');
     expect(
-      extractYouTubePlaylistId(
-        'https://m.youtube.com/watch?v=abc123&list=PLabc',
-      ),
-    ).toBe('PLabc');
+      extractYouTubePlaylistId('https://m.youtube.com/watch?v=foo&list=bar'),
+    ).toBe('bar');
   });
 
   it('returns null for non-YouTube URLs', () => {
@@ -144,7 +156,7 @@ describe('extractYouTubePlaylistId', () => {
 
   it('returns null when playlist id is missing', () => {
     expect(
-      extractYouTubePlaylistId('https://www.youtube.com/watch?v=abc123'),
+      extractYouTubePlaylistId('https://www.youtube.com/watch?v=foo'),
     ).toBeNull();
   });
 });
