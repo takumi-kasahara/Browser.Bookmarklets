@@ -1,13 +1,13 @@
 import { is } from '../modules/WindowExtensions.js';
 
 (() => {
-  const selectedText = document.getSelection?.()?.toString().trim() ?? '';
-  if (selectedText) {
-    const tl = /[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText)
+  const text = document.getSelection?.()?.toString().trim() ?? '';
+  if (text) {
+    const tl = /[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(text)
       ? 'en'
       : 'ja';
     window.open(
-      `https://translate.google.com/?sl=auto&tl=${tl}&text=${encodeURIComponent(selectedText)}&op=translate`,
+      `https://translate.google.com/?sl=auto&tl=${tl}&text=${encodeURIComponent(text)}&op=translate`,
       '_blank',
       'noreferrer',
     );

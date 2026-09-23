@@ -1,28 +1,10 @@
 import { from, is, tryFetch } from '../modules/WindowExtensions.js';
 
 (async () => {
-  const selectedText = document.getSelection?.()?.toString().trim() ?? '';
-  if (
-    selectedText
-    && !/[\p{sc=Hiragana}\p{sc=Katakana}\p{sc=Han}]/u.test(selectedText)
-  ) {
-    const words = selectedText.split(/\s+/).filter(word => word.length > 0);
-    if (words.length > 0)
-      for (const word of words)
-        window.open(
-          `https://www.dictionary.com/browse/${encodeURIComponent(word)}`,
-          '_blank',
-          'noreferrer',
-        );
-  }
-  else if (location.hostname === 'www.dictionary.com')
-    location.hostname = 'www.thesaurus.com';
-  else if (location.hostname === 'www.thesaurus.com')
-    location.hostname = 'www.dictionary.com';
-  else if (/https?:/.test(location.protocol)) {
-    const url = await translateUrl();
-    if (url && url.href !== location.href) location.assign(url);
-  }
+  if (!/https?:/.test(location.protocol)) return;
+
+  const url = await translateUrl();
+  if (url && url.href !== location.href) location.assign(url);
 
   async function translateUrl(): Promise<URL | null> {
     const path = location.pathname.split('/');
