@@ -2,7 +2,6 @@ import {
   extractAmazonAsin,
   extractYouTubePlaylistId,
   extractYouTubeVideoId,
-  isNotEmptyString,
   toCalil,
   toKeepa,
 } from '../modules/IdentifierExtensions.js';
@@ -26,7 +25,7 @@ import { equiv, is, open } from '../modules/WindowExtensions.js';
       ...ifYouTube(),
     ]),
   )
-    .filter(isNotEmptyString)
+    .filter(Boolean)
     .filter(href => {
       try {
         return /https?:/.test(new URL(href).protocol);

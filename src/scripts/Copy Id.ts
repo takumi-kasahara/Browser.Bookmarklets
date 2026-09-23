@@ -2,7 +2,6 @@ import {
   extractAmazonAsin,
   extractYouTubePlaylistId,
   extractYouTubeVideoId,
-  isNotEmptyString,
 } from '../modules/IdentifierExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 import { extractIdsFromSchema } from '../modules/SchemaExtensions.js';
@@ -21,7 +20,7 @@ import { is } from '../modules/WindowExtensions.js';
       ...ifYouTube(),
     ]),
   )
-    .filter(isNotEmptyString)
+    .filter(Boolean)
     .sort(new Intl.Collator(undefined, { numeric: true }).compare);
   if (ids.length > 0)
     await copyToClipboard(`Copy ${ids.length} ID(s):`, ids.join('\n'));

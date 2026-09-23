@@ -1,14 +1,6 @@
 import { is } from './WindowExtensions';
 
 /**
- * @param {unknown} value
- * @returns {value is string}
- */
-export function isNotEmptyString(value: unknown): value is string {
-  return typeof value === 'string' && value.length > 0;
-}
-
-/**
  * Extract the Amazon ASIN from the current page.
  *
  * @param {Document} document

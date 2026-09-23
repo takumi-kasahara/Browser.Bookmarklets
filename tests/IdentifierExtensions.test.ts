@@ -3,29 +3,9 @@ import {
   extractAmazonAsin,
   extractYouTubePlaylistId,
   extractYouTubeVideoId,
-  isNotEmptyString,
   toAmazon,
   toCalil,
 } from '../src/modules/IdentifierExtensions.js';
-
-describe('isNotEmptyString', () => {
-  it('returns true for non-empty string', () => {
-    expect(isNotEmptyString('abc')).toBe(true);
-    expect(isNotEmptyString(' ')).toBe(true);
-  });
-
-  it('returns false for empty string', () => {
-    expect(isNotEmptyString('')).toBe(false);
-  });
-
-  it('returns false for non-string values', () => {
-    expect(isNotEmptyString(null)).toBe(false);
-    expect(isNotEmptyString(undefined)).toBe(false);
-    expect(isNotEmptyString(123)).toBe(false);
-    expect(isNotEmptyString({})).toBe(false);
-    expect(isNotEmptyString([])).toBe(false);
-  });
-});
 
 describe('toAmazon', () => {
   it('returns Amazon URL for valid 10-char ASIN', () => {
