@@ -8,7 +8,7 @@ import {
 } from '../modules/IdentifierExtensions.js';
 import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
 import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
-import { is, open } from '../modules/WindowExtensions.js';
+import { equiv, is, open } from '../modules/WindowExtensions.js';
 
 (async () => {
   if (!/https?:/.test(location.protocol)) return;
@@ -27,6 +27,14 @@ import { is, open } from '../modules/WindowExtensions.js';
     ]),
   )
     .filter(isNotEmptyString)
+    .filter(href => {
+      try {
+        return /https?:/.test(new URL(href).protocol);
+      }
+      catch {
+        return false;
+      }
+    })
     .map(href => {
       const url = new URL(href);
       if (
@@ -36,7 +44,7 @@ import { is, open } from '../modules/WindowExtensions.js';
         url.protocol = location.protocol;
       return url.href;
     })
-    .filter(url => url !== location.href)
+    .filter(href => !equiv(location, href))
     .sort(new Intl.Collator(undefined, { numeric: true }).compare);
   if (urls.length > 0) await open(urls);
   else console.warn('URL not found.');
