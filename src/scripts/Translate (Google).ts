@@ -18,7 +18,7 @@ import { is } from '../modules/WindowExtensions.js';
     if (e instanceof HTMLElement && e.dataset.sourceUrl)
       location.href = e.dataset.sourceUrl;
   }
-  else if (!/https?:/.test(location.protocol))
+  else if (!/^https?:$/.test(location.protocol))
     location.href = 'https://translate.google.com/?sl=auto&tl=ja&op=translate';
   else if (!document.querySelector('html[lang|=ja]'))
     window.open(

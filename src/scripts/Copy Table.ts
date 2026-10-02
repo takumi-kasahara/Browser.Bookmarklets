@@ -1,7 +1,7 @@
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const table = document.querySelector('table');
   if (table instanceof HTMLTableElement) {
