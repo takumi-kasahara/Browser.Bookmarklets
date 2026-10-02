@@ -49,6 +49,7 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
               if (node instanceof HTMLElement) {
                 if (
                   node instanceof HTMLAnchorElement
+                  && /^https?:$/.test(node.protocol)
                   && node.origin === location.origin
                 )
                   collection.add(node);
