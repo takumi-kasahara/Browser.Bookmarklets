@@ -1,3 +1,5 @@
+import { from } from './WindowExtensions';
+
 /**
  * @param {string} url
  * @param {string} text
@@ -22,9 +24,11 @@ export function collectAnchorElements(
   origin: string,
   sameOrigin = true,
 ): HTMLAnchorElement[] {
-  return Array.from(element.getElementsByTagName('a')).filter(
-    a => a.origin && (sameOrigin ? a.origin === origin : a.origin !== origin),
-  );
+  return Array.from(element.getElementsByTagName('a')).filter(a => {
+    if (!a.origin) return false;
+    if (sameOrigin) return a.origin === origin;
+    return /^https?:$/.test(from(a).protocol) ? a.origin !== origin : false;
+  });
 }
 
 /**

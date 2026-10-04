@@ -1,5 +1,5 @@
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
   if (location.hostname === 'duckduckgo.com') return;
 
   const url = new URL('https://duckduckgo.com/');

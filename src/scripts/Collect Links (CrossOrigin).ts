@@ -5,7 +5,7 @@ import {
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const COLLECTOR = Symbol.for('__CollectUrlObserver__');
   const COLLECTED = Symbol.for('__CollectedUrls__');
@@ -46,20 +46,14 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
         switch (mutation.type) {
           case 'childList':
             for (const node of mutation.addedNodes)
-              if (node instanceof HTMLElement) {
-                if (
-                  node instanceof HTMLAnchorElement
-                  && node.origin !== location.origin
-                )
-                  collection.add(node);
-                else
+              if (node instanceof HTMLElement)
+                if (node instanceof HTMLAnchorElement)
                   for (const a of collectAnchorElements(
                     node,
                     location.origin,
-                    false,
+                    node.origin !== location.origin,
                   ))
                     collection.add(a);
-              }
         }
     });
     observer.observe(document.body, { childList: true, subtree: true });

@@ -1,7 +1,7 @@
 import { from, is, tryFetch } from '../modules/WindowExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const url = await translateUrl();
   if (url && url.href !== location.href) location.assign(url);

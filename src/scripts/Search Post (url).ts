@@ -5,7 +5,7 @@ import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
 import { open } from '../modules/WindowExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
   if (location.hostname === 'x.com') return;
 
   const urls = extractUrlsFromSelection(document);
