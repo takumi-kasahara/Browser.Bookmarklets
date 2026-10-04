@@ -10,7 +10,7 @@ import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
 import { equiv, is, open } from '../modules/WindowExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const path = location.pathname.split('/');
   const urls = Array.from(
@@ -28,7 +28,7 @@ import { equiv, is, open } from '../modules/WindowExtensions.js';
     .filter(Boolean)
     .filter(href => {
       try {
-        return /https?:/.test(new URL(href).protocol);
+        return /^https?:$/.test(new URL(href).protocol);
       }
       catch {
         return false;

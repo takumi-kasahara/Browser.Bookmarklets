@@ -8,7 +8,7 @@ import { extractIdsFromSchema } from '../modules/SchemaExtensions.js';
 import { is } from '../modules/WindowExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const path = location.pathname.split('/');
   const ids = Array.from(

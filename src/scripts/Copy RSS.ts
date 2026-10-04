@@ -2,7 +2,7 @@ import { createAnchorElement } from '../modules/DocumentExtensions.js';
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const links = Array.from(document.querySelectorAll('link'))
     .filter(e => e instanceof HTMLLinkElement)

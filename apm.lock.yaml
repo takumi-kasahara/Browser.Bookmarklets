@@ -1,37 +1,37 @@
-lockfile_version: '1'
-apm_version: 0.32.0
+lockfile_version: "1"
+apm_version: 0.33.0
 dependencies:
-- repo_url: takumi-kasahara/dotfiles
-  materialization_repo_url: takumi-kasahara/Dotfiles
-  name: bookmarklets
-  host: github.com
-  resolved_commit: 5985d58a20a719254c85906424d7db4f921b7815
-  version: unknown
-  virtual_path: .apm/skills/bookmarklets
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .agents/skills/bookmarklets
-  - .agents/skills/bookmarklets/SKILL.md
-  deployed_file_hashes:
-    .agents/skills/bookmarklets/SKILL.md: sha256:3cd950ff3ffcdcede46034e71194b963a8bd382cd69aef8050c6e5fafe855e2a
-  content_hash: sha256:67b71bb73262b94ebff6e884832244b53d032d442ca53034e3b317c3828eb78f
+  - repo_url: takumi-kasahara/dotfiles
+    materialization_repo_url: takumi-kasahara/Dotfiles
+    name: bookmarklets
+    host: github.com
+    resolved_commit: 47352e89e30a1f90860950befd6a2e170257dba0
+    version: unknown
+    virtual_path: .apm/skills/bookmarklets
+    is_virtual: true
+    package_type: claude_skill
+    deployed_files:
+      - .agents/skills/bookmarklets
+      - .agents/skills/bookmarklets/SKILL.md
+    deployed_file_hashes:
+      .agents/skills/bookmarklets/SKILL.md: sha256:c71d3fd21a4975442d9fae4d7f0477b921133933e31cb3c8b8225f7dd5210b44
+    content_hash: sha256:0d7d252c19364fec202b2ed9b92ce68c545c3d6dbc5fc6872279a5d2df3ac7ee
 deployments:
-- kind: project-relative
-  target: copilot
-  value: .agents/skills/bookmarklets
-  runtime: null
-  scope: project
-  owners:
-  - takumi-kasahara/dotfiles/.apm/skills/bookmarklets
-  active_owner: takumi-kasahara/dotfiles/.apm/skills/bookmarklets
-  content_hash: null
-- kind: project-relative
-  target: copilot
-  value: .agents/skills/bookmarklets/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - takumi-kasahara/dotfiles/.apm/skills/bookmarklets
-  active_owner: takumi-kasahara/dotfiles/.apm/skills/bookmarklets
-  content_hash: sha256:3cd950ff3ffcdcede46034e71194b963a8bd382cd69aef8050c6e5fafe855e2a
+  - kind: project-relative
+    target: copilot
+    value: .agents/skills/bookmarklets
+    runtime: null
+    scope: project
+    owners:
+      - takumi-kasahara/dotfiles/.apm/skills/bookmarklets
+    active_owner: takumi-kasahara/dotfiles/.apm/skills/bookmarklets
+    content_hash: null
+  - kind: project-relative
+    target: copilot
+    value: .agents/skills/bookmarklets/SKILL.md
+    runtime: null
+    scope: project
+    owners:
+      - takumi-kasahara/dotfiles/.apm/skills/bookmarklets
+    active_owner: takumi-kasahara/dotfiles/.apm/skills/bookmarklets
+    content_hash: sha256:c71d3fd21a4975442d9fae4d7f0477b921133933e31cb3c8b8225f7dd5210b44

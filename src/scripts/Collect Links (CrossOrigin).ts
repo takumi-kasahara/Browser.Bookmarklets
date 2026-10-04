@@ -5,7 +5,7 @@ import {
 import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const COLLECTOR = Symbol.for('__CollectUrlObserver__');
   const COLLECTED = Symbol.for('__CollectedUrls__');
@@ -49,9 +49,11 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
               if (node instanceof HTMLElement) {
                 if (
                   node instanceof HTMLAnchorElement
+                  && /^https?:$/.test(node.protocol)
                   && node.origin !== location.origin
-                )
+                ) {
                   collection.add(node);
+                }
                 else
                   for (const a of collectAnchorElements(
                     node,

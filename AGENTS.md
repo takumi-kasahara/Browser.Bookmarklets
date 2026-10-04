@@ -79,8 +79,13 @@ Project-specific TypeScript coding rules are maintained in:
 
 ## Project Configuration Files
 
-- `eslint.config.mjs` - ESLint rules (ensure consistency with coding conventions)
-- `jsconfig.json` - JavaScript configuration and type hints for VSCode
-- `.tools/build.minify.js` - Build script for esbuild minification
-- `.tools/build.page.js` - Build script for generating installation pages
-- `.markdownlint.json` - Markdown linting rules
+- `eslint.config.mjs`
+  - - ESLint rules (ensure consistency with coding conventions)
+- `jsconfig.json`
+  - - JavaScript configuration and type hints for VSCode
+- `.tools/build.minify.js`
+  - Build script for esbuild minification
+- `.tools/build.page.js`
+  - Build script for generating installation pages
+- `.markdownlint.json`
+  - Markdown linting rules
