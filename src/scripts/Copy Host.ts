@@ -2,7 +2,7 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
 import { is } from '../modules/WindowExtensions.js';
 
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const host = location.host;
   const sub = getSubDomain();

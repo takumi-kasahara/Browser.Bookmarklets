@@ -33,7 +33,7 @@ describe('collectAnchorElements', () => {
     const a1 = document.createElement('a');
     a1.href = 'https://example.com/a';
     const a2 = document.createElement('a');
-    a2.href = 'https://other.com/b';
+    a2.href = 'https://example.org/b';
     document.body.append(a1, a2);
     const result = collectAnchorElements(document.body, 'https://example.com');
     expect(result.length).toBe(1);
@@ -45,7 +45,7 @@ describe('collectAnchorElements', () => {
     const a1 = document.createElement('a');
     a1.href = 'https://example.com/a';
     const a2 = document.createElement('a');
-    a2.href = 'https://other.com/b';
+    a2.href = 'https://example.org/b';
     document.body.append(a1, a2);
     const result = collectAnchorElements(
       document.body,
@@ -53,7 +53,7 @@ describe('collectAnchorElements', () => {
       false,
     );
     expect(result.length).toBe(1);
-    expect(result[0].href).toBe('https://other.com/b');
+    expect(result[0].href).toBe('https://example.org/b');
     document.body.innerHTML = '';
   });
 

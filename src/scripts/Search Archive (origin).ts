@@ -1,5 +1,5 @@
 (() => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
   if (location.hostname === 'web.archive.org') return;
 
   window.open(

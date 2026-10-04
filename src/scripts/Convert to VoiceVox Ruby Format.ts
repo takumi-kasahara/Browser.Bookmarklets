@@ -1,5 +1,5 @@
 (async () => {
-  if (!/https?:/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
 
   const rubies = document.querySelectorAll('ruby');
   for (const ruby of rubies) {
