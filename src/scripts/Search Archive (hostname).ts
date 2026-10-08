@@ -3,7 +3,7 @@
   if (location.hostname === 'web.archive.org') return;
 
   window.open(
-    `https://web.archive.org/web/*/${location.origin}/*`,
+    `https://web.archive.org/web/*/${location.hostname}/*`,
     '_blank',
     'noreferrer',
   );
