@@ -3,6 +3,7 @@ import {
   available,
   escape,
   extractElement,
+  getRubyPairs,
   visible,
 } from '../src/modules/HtmlExtensions.js';
 
@@ -13,6 +14,44 @@ describe('escape', () => {
 
   it('leaves plain text unchanged', () => {
     expect(escape('hello world')).toBe('hello world');
+  });
+});
+
+describe('getRubyPairs', () => {
+  it('pairs rb elements with rt readings in order', () => {
+    const ruby = document.createElement('ruby');
+    ruby.innerHTML
+      = '<rb>漢</rb><rb>字</rb><rp>(</rp><rt>かん</rt><rt>じ</rt><rp>)</rp>';
+
+    expect(getRubyPairs(ruby)).toEqual([
+      ['漢', 'かん'],
+      ['字', 'じ'],
+    ]);
+  });
+
+  it('pairs interleaved base text with rt readings in order', () => {
+    const ruby = document.createElement('ruby');
+    ruby.innerHTML
+      = '漢<rp>(</rp><rt>かん</rt><rp>)</rp>字<rp>(</rp><rt>じ</rt><rp>)</rp>';
+
+    expect(getRubyPairs(ruby)).toEqual([
+      ['漢', 'かん'],
+      ['字', 'じ'],
+    ]);
+  });
+
+  it('returns null when rb and rt counts do not match', () => {
+    const ruby = document.createElement('ruby');
+    ruby.innerHTML = '<rb>漢</rb><rb>字</rb><rt>かん</rt>';
+
+    expect(getRubyPairs(ruby)).toBeNull();
+  });
+
+  it('returns null when interleaved base text has no reading', () => {
+    const ruby = document.createElement('ruby');
+    ruby.innerHTML = '漢<rt>かん</rt>字';
+
+    expect(getRubyPairs(ruby)).toBeNull();
   });
 });
 
