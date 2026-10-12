@@ -9,6 +9,63 @@ export function escape(text: string): string {
 }
 
 /**
+ * @param {Element} ruby
+ */
+export function getRubyPairs(ruby: Element): [string, string][] | null {
+  const baseElements = Array.from(ruby.children).filter(
+    element => element.localName === 'rb',
+  );
+  const readingElements = Array.from(ruby.children).filter(
+    element => element.localName === 'rt',
+  );
+
+  if (baseElements.length > 0) {
+    if (baseElements.length !== readingElements.length) return null;
+
+    const pairs: [string, string][] = [];
+    for (const [index, baseElement] of baseElements.entries()) {
+      const readingElement = readingElements.at(index);
+      if (!readingElement) return null;
+
+      const baseText = baseElement.textContent?.trim() ?? '';
+      const readingText
+        = readingElement.textContent?.trim().toLowerCase() ?? '';
+      if (!baseText || !readingText) return null;
+
+      pairs.push([baseText, readingText]);
+    }
+    return pairs;
+  }
+
+  const pairs: [string, string][] = [];
+  let baseText = '';
+  for (const child of ruby.childNodes) {
+    if (child.nodeType === Node.TEXT_NODE) {
+      baseText += child.textContent ?? '';
+      continue;
+    }
+    if (child.nodeType !== Node.ELEMENT_NODE) continue;
+
+    const element = child as Element;
+    if (element.localName === 'rp') continue;
+    if (element.localName !== 'rt') {
+      baseText += element.textContent ?? '';
+      continue;
+    }
+
+    const normalizedBaseText = baseText.trim();
+    const readingText = element.textContent?.trim().toLowerCase() ?? '';
+    if (!normalizedBaseText || !readingText) return null;
+
+    pairs.push([normalizedBaseText, readingText]);
+    baseText = '';
+  }
+
+  if (!pairs.length || baseText.trim()) return null;
+  return pairs;
+}
+
+/**
  * @param {HTMLElement} element
  */
 export function available(element: HTMLElement): boolean {
