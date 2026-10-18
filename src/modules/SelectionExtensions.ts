@@ -16,8 +16,20 @@ export function extractUrlsFromSelection(document: Document): string[] {
   if (!element) return [];
 
   const anchors = Array.from(element.getElementsByTagName('a'));
-  const found = anchors.filter(anchor => range.intersectsNode(anchor));
-  if (found.length > 0) return found.map(a => a.href);
+  const found = anchors
+    .filter(a => range.intersectsNode(a))
+    .map(a => a.href)
+    .filter(Boolean)
+    .filter(href => {
+      try {
+        return /^https?:$/.test(new URL(href).protocol);
+      }
+      catch {
+        return false;
+      }
+    });
+
+  if (found.length > 0) return found;
 
   const text = selection.toString().trim();
   if (!text) return [];
