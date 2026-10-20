@@ -43,13 +43,6 @@
       </li>
       <li>
         <a
-          href="javascript:%22use%20strict%22%3B(()%3D%3E%7Basync%20function%20o(r%2Ct)%7Btry%7Btypeof%20t%3D%3D%22string%22%3Fawait%20navigator.clipboard.writeText(t)%3At%20instanceof%20ClipboardItem%26%26await%20navigator.clipboard.write(%5Bt%5D)%2Cwindow.alert(r)%7Dcatch(e)%7Bif(!(e%20instanceof%20Error))throw%20e%3Bconsole.warn(e.message)%2Cwindow.prompt(r%2CString(t))%7D%7Dfunction%20i(r%2Ct)%7Blet%20e%3Ddocument.createElement(%22a%22)%3Breturn%20e.href%3Dr%2Ce.rel%3D%22noreferrer%22%2Ce.target%3D%22_blank%22%2Ce.setHTML(t%7C%7Cr)%2Ce.outerHTML%7D(async()%3D%3E%7Bif(!%2F%5Ehttps%3F%3A%24%2F.test(location.protocol))return%3Blet%20r%3DArray.from(document.querySelectorAll(%22link%22)).filter(t%3D%3Et%20instanceof%20HTMLLinkElement).filter(t%3D%3Et.rel%3D%3D%3D%22alternate%22).filter(t%3D%3Et.type%3D%3D%3D%22application%2Fatom%2Bxml%22%7C%7Ct.type%3D%3D%3D%22application%2Frss%2Bxml%22)%3Bif(r.length%3E0)%7Blet%20t%3Dr.map(n%3D%3En.href)%2Ce%3Dr.map(n%3D%3Ei(n.href%2Cn.title%7C%7Cn.href))%3Bawait%20o(%60Copy%20%24%7Bt.length%7D%20RSS%20URL(s)%3A%60%2Cnew%20ClipboardItem(%7B%22text%2Fplain%22%3Anew%20Blob(%5Bt.join(%60%0A%60)%5D)%2C%22text%2Fhtml%22%3Anew%20Blob(%5Be.join(%22%3Cbr%3E%22)%5D)%7D))%7Delse%20console.warn(%22RSS%20not%20found.%22)%7D)()%3B%7D)()%3B"
-        >
-          Copy RSS
-        </a>
-      </li>
-      <li>
-        <a
           href="javascript:%22use%20strict%22%3B(()%3D%3E%7Basync%20function%20n(o%2Ct)%7Btry%7Btypeof%20t%3D%3D%22string%22%3Fawait%20navigator.clipboard.writeText(t)%3At%20instanceof%20ClipboardItem%26%26await%20navigator.clipboard.write(%5Bt%5D)%2Cwindow.alert(o)%7Dcatch(e)%7Bif(!(e%20instanceof%20Error))throw%20e%3Bconsole.warn(e.message)%2Cwindow.prompt(o%2CString(t))%7D%7D(async()%3D%3E%7Bif(!%2F%5Ehttps%3F%3A%24%2F.test(location.protocol))return%3Blet%20o%3Ddocument.querySelector(%22table%22)%3Bif(o%20instanceof%20HTMLTableElement)%7Blet%20t%3Do.outerText%2Ce%3Do.outerHTML%3Bawait%20n(%22Copy%20table%3A%22%2Cnew%20ClipboardItem(%7B%22text%2Fplain%22%3Anew%20Blob(%5Bt%5D)%2C%22text%2Fhtml%22%3Anew%20Blob(%5Be%5D)%7D))%7Delse%20console.warn(%22Table%20not%20found.%22)%7D)()%3B%7D)()%3B"
         >
           Copy Table
@@ -94,7 +87,7 @@
         <a
           href="javascript:%22use%20strict%22%3B(()%3D%3E%7B%2F%5Ehttps%3F%3A%24%2F.test(location.protocol)%26%26location.hostname!%3D%3D%22web.archive.org%22%26%26window.open(%60https%3A%2F%2Fweb.archive.org%2Fweb%2F*%2F%24%7Blocation.hostname%7D%2F*%60%2C%22_blank%22%2C%22noreferrer%22)%3B%7D)()%3B"
         >
-          Search Archive (hostname)
+          Search Archive (host)
         </a>
       </li>
       <li>
@@ -108,7 +101,7 @@
         <a
           href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Bif(!%2F%5Ehttps%3F%3A%24%2F.test(location.protocol)%7C%7Clocation.hostname%3D%3D%3D%22x.com%22)return%3Blet%20o%3Dnew%20URL(%22https%3A%2F%2Fx.com%2Fsearch%22)%3Bo.searchParams.set(%22q%22%2C%60url%3A%24%7Blocation.hostname%7D%60)%2Cwindow.open(o%2C%22_blank%22%2C%22noreferrer%22)%7D)()%3B%7D)()%3B"
         >
-          Search Post (hostname)
+          Search Post (host)
         </a>
       </li>
       <li>
