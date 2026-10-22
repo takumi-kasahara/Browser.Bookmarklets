@@ -8,6 +8,55 @@
     <ul>
       <li>
         <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(()%3D%3E%7Blet%20c%3Ddocument.cookie%3Bif(c)for(let%20s%20of%20c.split(%22%3B%22))%7Blet%20o%3Ds.trim()%2Ce%3Do.indexOf(%22%3D%22)%2Ct%3De%3D%3D%3D-1%3Fo%3Ao.slice(0%2Ce)%2Ci%3De%3D%3D%3D-1%3F%22%22%3Ao.slice(e%2B1)%3Bconsole.debug(%22Cookies%3A%22%2Ct%2Ci)%7D%7D)()%3B%7D)()%3B"
+        >
+          Analyze Cookies
+        </a>
+      </li>
+      <li>
+        <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Blet%20n%3Dawait%20window.caches.keys()%3Bif(n.length!%3D%3D0)%7Bfor(let%20e%20of%20n)try%7Blet%20a%3Dawait%20window.caches.open(e)%2Ci%3Dawait%20a.keys()%2Co%3D%7B%7D%3Bfor(let%20t%20of%20i)%7Blet%20l%3Dawait%20a.matchAll(t)%2Cs%3Dawait%20Promise.all(l.map(async%20c%3D%3E%7Blet%20w%3Dc%3Fawait%20c.text()%3Avoid%200%3Breturn%20c%3F%7Brequest%3At%2Cresponse%3Ac%2Ctext%3Aw%7D%3Avoid%200%7D))%2Cr%3Do%5Bt.url%5D%3Bo%5Bt.url%5D%3Dr%3Fr.concat(s)%3As%7Dconsole.debug(%22CacheStorage%3A%22%2Ce%2Co)%7Dcatch(a)%7Bconsole.debug(%22CacheStorage%3A%22%2Ce%2Ca)%7Dwindow.confirm(%22Clear%20CacheStorage%3F%22)%26%26await%20Promise.all(n.map(e%3D%3Ecaches.delete(e)))%7D%7D)()%3B%7D)()%3B"
+        >
+          Clear CacheStorage
+        </a>
+      </li>
+      <li>
+        <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Blet%20c%3Dawait%20window.indexedDB.databases()%3Bif(c.length!%3D%3D0)%7Bfor(let%20t%20of%20c)%7Blet%20s%3Dt.name%3Bif(s)try%7Blet%20n%3Dawait%20new%20Promise((o%2Cr)%3D%3E%7Blet%20e%3Dwindow.indexedDB.open(s)%3Be.onsuccess%3D()%3D%3Eo(e.result)%2Ce.onerror%3D()%3D%3Er(e.error)%7D)%2Ci%3DArray.from(n.objectStoreNames)%2Cd%3D%7B%7D%3Bfor(let%20o%20of%20i)d%5Bo%5D%3Dawait%20new%20Promise((r%2Ce)%3D%3E%7Blet%20a%3Dn.transaction(o%2C%22readonly%22).objectStore(o).getAll()%3Ba.onsuccess%3D()%3D%3Er(a.result)%2Ca.onerror%3D()%3D%3Ee(a.error)%7D)%3Bconsole.debug(%22IndexedDB%3A%22%2Cs%2Cd)%2Cn.close()%7Dcatch(n)%7Bconsole.debug(%22IndexedDB%3A%22%2Cs%2Cn)%7D%7Dif(window.confirm(%22Clear%20IndexedDB%3F%22))for(let%20t%20of%20await%20window.indexedDB.databases())t.name%26%26window.indexedDB.deleteDatabase(t.name)%7D%7D)()%3B%7D)()%3B"
+        >
+          Clear IndexedDB
+        </a>
+      </li>
+      <li>
+        <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7Bwindow.localStorage.length!%3D%3D0%26%26(console.debug(%22LocalStrage%3A%22%2Cwindow.localStorage)%2Cwindow.confirm(%22Clear%20LocalStrage%3F%22)%26%26window.localStorage.clear())%3B%7D)()%3B"
+        >
+          Clear LocalStrage
+        </a>
+      </li>
+      <li>
+        <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Blet%20e%3Dawait%20navigator.storage.getDirectory()%3Bif(!e)return%3Blet%20r%3D%5B%5D%3Bfor%20await(let%5Bt%5Dof%20e.entries())r.push(t)%3Br.length!%3D%3D0%26%26(console.debug(%22OPFS%3A%22%2Cr)%2Cwindow.confirm(%22Clear%20OPFS%3F%22)%26%26await%20Promise.all(r.map(t%3D%3Ee.removeEntry(t%2C%7Brecursive%3A!0%7D))))%7D)()%3B%7D)()%3B"
+        >
+          Clear OPFS
+        </a>
+      </li>
+      <li>
+        <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7B(async()%3D%3E%7Blet%20r%3Dawait%20navigator.serviceWorker.getRegistrations()%3Br.length!%3D%3D0%26%26(console.debug(%22ServiceWorkers%3A%22%2Cr)%2Cwindow.confirm(%22Clear%20ServiceWorkers%3F%22)%26%26await%20Promise.all(r.map(e%3D%3Ee.unregister())))%7D)()%3B%7D)()%3B"
+        >
+          Clear ServiceWorkers
+        </a>
+      </li>
+      <li>
+        <a
+          href="javascript:%22use%20strict%22%3B(()%3D%3E%7Bwindow.sessionStorage.length!%3D%3D0%26%26(console.debug(%22SessionStorage%3A%22%2Cwindow.sessionStorage)%2Cwindow.confirm(%22Clear%20SessionStorage%3F%22)%26%26window.sessionStorage.clear())%3B%7D)()%3B"
+        >
+          Clear SessionStorage
+        </a>
+      </li>
+      <li>
+        <a
           href="javascript:%22use%20strict%22%3B(()%3D%3E%7Basync%20function%20a(t%2Cn)%7Btry%7Btypeof%20n%3D%3D%22string%22%3Fawait%20navigator.clipboard.writeText(n)%3An%20instanceof%20ClipboardItem%26%26await%20navigator.clipboard.write(%5Bn%5D)%2Cwindow.alert(t)%7Dcatch(e)%7Bif(!(e%20instanceof%20Error))throw%20e%3Bconsole.warn(e.message)%2Cwindow.prompt(t%2CString(n))%7D%7Dfunction%20m(t)%7Bif(t%20instanceof%20URL)return%20t%3Bif(typeof%20t%3D%3D%22string%22)return%20new%20URL(t)%3Bif(%22href%22in%20t)return%20new%20URL(t.href)%3Bif(%22src%22in%20t)return%20new%20URL(t.src)%3Bthrow%20new%20TypeError(%22Invalid%20URL-like%20object.%22)%7Dfunction%20g(t%2Cn)%7Blet%20e%3Ddocument.createElement(%22a%22)%3Breturn%20e.href%3Dt%2Ce.rel%3D%22noreferrer%22%2Ce.target%3D%22_blank%22%2Ce.setHTML(n%7C%7Ct)%2Ce.outerHTML%7Dfunction%20f(t%2Cn%2Ce%3D!0)%7Breturn%20Array.from(t.getElementsByTagName(%22a%22)).filter(o%3D%3Eo.origin%3Fe%3Fo.origin%3D%3D%3Dn%3A%2F%5Ehttps%3F%3A%24%2F.test(m(o).protocol)%3Fo.origin!%3D%3Dn%3A!1%3A!1)%7D(async()%3D%3E%7Bif(!%2F%5Ehttps%3F%3A%24%2F.test(location.protocol))return%3Blet%20t%3DSymbol.for(%22__CollectUrlObserver__%22)%2Cn%3DSymbol.for(%22__CollectedUrls__%22)%2Ce%3Dwindow%2Co%3De%5Bn%5D%2Cu%3De%5Bt%5D%3Bif(o%20instanceof%20Set%26%26u%20instanceof%20MutationObserver)%7Bif(!window.confirm(%22Stop%20collecting%3F%22))return%3Bu.disconnect()%2Ce%5Bt%5D%3Dnull%3Blet%20i%3Do%2Cs%3DArray.from(i).filter(r%3D%3Er%20instanceof%20HTMLAnchorElement).map(r%3D%3Er.href).sort(new%20Intl.Collator(void%200%2C%7Bnumeric%3A!0%7D).compare)%2Cl%3DArray.from(i).filter(r%3D%3Er%20instanceof%20HTMLAnchorElement).map(r%3D%3Eg(r.href%2Cr.innerHTML.trim()))%3Bs.length%3E0%26%26await%20a(%60Copy%20%24%7Bs.length%7D%20URL(s)%3A%60%2Cnew%20ClipboardItem(%7B%22text%2Fplain%22%3Anew%20Blob(%5Bs.join(%60%0A%60)%5D)%2C%22text%2Fhtml%22%3Anew%20Blob(%5Bl.join(%22%3Cbr%3E%22)%5D)%7D))%7Delse%7Bif(!window.confirm(%22Start%20collecting%20cross-origin%20links%3F%22))return%3Blet%20i%3Dnew%20Set(f(document.body%2Clocation.origin%2C!1))%2Cs%3Dnew%20MutationObserver(l%3D%3E%7Bfor(let%20r%20of%20l)switch(r.type)%7Bcase%22childList%22%3Afor(let%20c%20of%20r.addedNodes)if(c%20instanceof%20HTMLElement)if(c%20instanceof%20HTMLAnchorElement%26%26%2F%5Ehttps%3F%3A%24%2F.test(c.protocol)%26%26c.origin!%3D%3Dlocation.origin)i.add(c)%3Belse%20for(let%20h%20of%20f(c%2Clocation.origin%2C!1))i.add(h)%7D%7D)%3Bs.observe(document.body%2C%7BchildList%3A!0%2Csubtree%3A!0%7D)%2Ce%5Bn%5D%3Di%2Ce%5Bt%5D%3Ds%7D%7D)()%3B%7D)()%3B"
         >
           Collect Links (CrossOrigin)
