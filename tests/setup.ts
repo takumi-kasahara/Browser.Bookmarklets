@@ -52,8 +52,7 @@ if (
     get() {
       try {
         return new URL(this.href).origin;
-      }
-      catch {
+      } catch {
         return '';
       }
     },

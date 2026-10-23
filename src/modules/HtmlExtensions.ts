@@ -28,8 +28,8 @@ export function getRubyPairs(ruby: Element): [string, string][] | null {
       if (!readingElement) return null;
 
       const baseText = baseElement.textContent?.trim() ?? '';
-      const readingText
-        = readingElement.textContent?.trim().toLowerCase() ?? '';
+      const readingText =
+        readingElement.textContent?.trim().toLowerCase() ?? '';
       if (!baseText || !readingText) return null;
 
       pairs.push([baseText, readingText]);
@@ -73,14 +73,14 @@ export function available(element: HTMLElement): boolean {
 
   if (!element.isConnected) return false;
   if (
-    (element instanceof HTMLButtonElement
-      || element instanceof HTMLFieldSetElement
-      || element instanceof HTMLInputElement
-      || element instanceof HTMLOptGroupElement
-      || element instanceof HTMLOptionElement
-      || element instanceof HTMLSelectElement
-      || element instanceof HTMLTextAreaElement)
-    && element.disabled
+    (element instanceof HTMLButtonElement ||
+      element instanceof HTMLFieldSetElement ||
+      element instanceof HTMLInputElement ||
+      element instanceof HTMLOptGroupElement ||
+      element instanceof HTMLOptionElement ||
+      element instanceof HTMLSelectElement ||
+      element instanceof HTMLTextAreaElement) &&
+    element.disabled
   )
     return false;
   if (window.getComputedStyle(element).pointerEvents === 'none') return false;
@@ -119,8 +119,8 @@ export function extractElement(
       .filter((e): e is HTMLElement => e instanceof HTMLElement)
       .filter(
         e =>
-          e.parentElement?.closest(`[${scopeAttribute}]`) === element
-          || e.closest(`[${scopeAttribute}]`) === null,
+          e.parentElement?.closest(`[${scopeAttribute}]`) === element ||
+          e.closest(`[${scopeAttribute}]`) === null,
       ),
     e => e.getAttribute(propertyAttribute) ?? '',
   );
@@ -146,10 +146,9 @@ export function extractElement(
     if (element instanceof HTMLMetaElement) return element.content;
     if (element instanceof HTMLAudioElement)
       return (
-        element.src
-        ?? Array.from(element.children).find(
-          e =>
-            e instanceof HTMLSourceElement || e instanceof HTMLTrackElement,
+        element.src ??
+        Array.from(element.children).find(
+          e => e instanceof HTMLSourceElement || e instanceof HTMLTrackElement,
         )?.src
       );
     if (element instanceof HTMLEmbedElement) return element.src;
@@ -161,10 +160,9 @@ export function extractElement(
     if (element instanceof HTMLTrackElement) return element.src;
     if (element instanceof HTMLVideoElement)
       return (
-        element.src
-        ?? Array.from(element.children).find(
-          e =>
-            e instanceof HTMLSourceElement || e instanceof HTMLTrackElement,
+        element.src ??
+        Array.from(element.children).find(
+          e => e instanceof HTMLSourceElement || e instanceof HTMLTrackElement,
         )?.src
       );
     if (element instanceof HTMLAnchorElement) return element.href;

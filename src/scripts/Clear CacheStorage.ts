@@ -19,8 +19,7 @@
         entries[request.url] = existing ? existing.concat(resolved) : resolved;
       }
       console.debug('CacheStorage:', cacheName, entries);
-    }
-    catch (e) {
+    } catch (e) {
       console.debug('CacheStorage:', cacheName, e);
     }
   }

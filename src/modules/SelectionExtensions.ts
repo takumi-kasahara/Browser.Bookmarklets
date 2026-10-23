@@ -11,8 +11,8 @@ export function extractUrlsFromSelection(document: Document): string[] {
 
   const range = selection.getRangeAt(0);
   const container = range.commonAncestorContainer;
-  const element
-    = container instanceof Element ? container : container.parentElement;
+  const element =
+    container instanceof Element ? container : container.parentElement;
   if (!element) return [];
 
   const anchors = Array.from(element.getElementsByTagName('a'));
@@ -23,8 +23,7 @@ export function extractUrlsFromSelection(document: Document): string[] {
     .filter(href => {
       try {
         return /^https?:$/.test(new URL(href).protocol);
-      }
-      catch {
+      } catch {
         return false;
       }
     });

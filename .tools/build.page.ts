@@ -63,14 +63,14 @@ interface Bookmarklet {
 <body>
 <ul>
 ${bookmarklets
-    .map(
-      b => `<li>
+  .map(
+    b => `<li>
 <a href="${b.href}">
 ${escape(b.name)}
 </a>
 </li>`,
-    )
-    .join('\n')}
+  )
+  .join('\n')}
 </ul>
 </body>
 </html>

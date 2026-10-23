@@ -16,8 +16,7 @@ export function extractAmazonAsin(
     try {
       const asin = JSON.parse(e.value).asin;
       if (asin) return String(asin);
-    }
-    catch (e) {
+    } catch (e) {
       if (e instanceof Error) console.warn(e.message, e);
       else console.warn(e);
     }

@@ -11,8 +11,7 @@ export async function copyToClipboard(
     else if (item instanceof ClipboardItem)
       await navigator.clipboard.write([item]);
     window.alert(message);
-  }
-  catch (e) {
+  } catch (e) {
     if (!(e instanceof Error)) throw e;
     console.warn(e.message);
     void window.prompt(message, String(item));

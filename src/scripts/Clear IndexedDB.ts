@@ -26,8 +26,7 @@
       }
       console.debug('IndexedDB:', name, contents);
       db.close();
-    }
-    catch (e) {
+    } catch (e) {
       console.debug('IndexedDB:', name, e);
     }
   }

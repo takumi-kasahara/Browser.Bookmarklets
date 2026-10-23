@@ -14,6 +14,5 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
         'text/html': new Blob([html]),
       }),
     );
-  }
-  else console.warn('Table not found.');
+  } else console.warn('Table not found.');
 })();
