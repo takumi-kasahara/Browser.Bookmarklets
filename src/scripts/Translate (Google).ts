@@ -11,14 +11,12 @@ import { is } from '../modules/WindowExtensions.js';
       '_blank',
       'noreferrer',
     );
-  }
-  else if (location.hostname === 'translate.google.com') return;
+  } else if (location.hostname === 'translate.google.com') return;
   else if (is('translate.goog')) {
     const e = document.querySelector('[data-source-url]');
     if (e instanceof HTMLElement && e.dataset.sourceUrl)
       location.href = e.dataset.sourceUrl;
-  }
-  else if (!/^https?:$/.test(location.protocol))
+  } else if (!/^https?:$/.test(location.protocol))
     location.href = 'https://translate.google.com/?sl=auto&tl=ja&op=translate';
   else if (!document.querySelector('html[lang|=ja]'))
     window.open(

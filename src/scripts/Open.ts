@@ -29,16 +29,15 @@ import { equiv, is, open } from '../modules/WindowExtensions.js';
     .filter(href => {
       try {
         return /^https?:$/.test(new URL(href).protocol);
-      }
-      catch {
+      } catch {
         return false;
       }
     })
     .map(href => {
       const url = new URL(href);
       if (
-        url.hostname === location.hostname
-        && url.protocol !== location.protocol
+        url.hostname === location.hostname &&
+        url.protocol !== location.protocol
       )
         url.protocol = location.protocol;
       return url.href;
@@ -79,8 +78,8 @@ import { equiv, is, open } from '../modules/WindowExtensions.js';
         .map(e => new URL(e.name))
         .filter(
           u =>
-            u.origin === location.origin
-            && u.pathname === '/ajax/illust/detail',
+            u.origin === location.origin &&
+            u.pathname === '/ajax/illust/detail',
         )
         .map(u => u.searchParams.get('illust_ids'))
         .find(Boolean);
@@ -148,8 +147,7 @@ import { equiv, is, open } from '../modules/WindowExtensions.js';
         return [url.href];
       }
       return [url.href];
-    }
-    else if (url.hostname === 'music.youtube.com') {
+    } else if (url.hostname === 'music.youtube.com') {
       url.hostname = 'www.youtube.com';
       return [url.href];
     }

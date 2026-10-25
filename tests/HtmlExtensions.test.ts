@@ -20,8 +20,8 @@ describe('escape', () => {
 describe('getRubyPairs', () => {
   it('pairs rb elements with rt readings in order', () => {
     const ruby = document.createElement('ruby');
-    ruby.innerHTML
-      = '<rb>漢</rb><rb>字</rb><rp>(</rp><rt>かん</rt><rt>じ</rt><rp>)</rp>';
+    ruby.innerHTML =
+      '<rb>漢</rb><rb>字</rb><rp>(</rp><rt>かん</rt><rt>じ</rt><rp>)</rp>';
 
     expect(getRubyPairs(ruby)).toEqual([
       ['漢', 'かん'],
@@ -31,8 +31,8 @@ describe('getRubyPairs', () => {
 
   it('pairs interleaved base text with rt readings in order', () => {
     const ruby = document.createElement('ruby');
-    ruby.innerHTML
-      = '漢<rp>(</rp><rt>かん</rt><rp>)</rp>字<rp>(</rp><rt>じ</rt><rp>)</rp>';
+    ruby.innerHTML =
+      '漢<rp>(</rp><rt>かん</rt><rp>)</rp>字<rp>(</rp><rt>じ</rt><rp>)</rp>';
 
     expect(getRubyPairs(ruby)).toEqual([
       ['漢', 'かん'],

@@ -72,12 +72,12 @@ import { from, is, tryFetch } from '../modules/WindowExtensions.js';
      */
     function alt(tag: string): HTMLAnchorElement | HTMLLinkElement | null {
       if (tag === 'en') {
-        const e
-          = document.querySelector(
+        const e =
+          document.querySelector(
             'link[rel="alternate"][hreflang="x-default"]',
-          )
-          ?? document.querySelector('link[rel="alternate"][hreflang="en-us"]')
-          ?? document.querySelector('link[rel="alternate"][hreflang="en"]');
+          ) ??
+          document.querySelector('link[rel="alternate"][hreflang="en-us"]') ??
+          document.querySelector('link[rel="alternate"][hreflang="en"]');
         if (e instanceof HTMLLinkElement) return e;
       }
       const e = document.querySelector(

@@ -13,8 +13,8 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
   const collectedState = state[COLLECTED];
   const collectorState = state[COLLECTOR];
   if (
-    collectedState instanceof Set
-    && collectorState instanceof MutationObserver
+    collectedState instanceof Set &&
+    collectorState instanceof MutationObserver
   ) {
     if (!window.confirm('Stop collecting?')) return;
     collectorState.disconnect();
@@ -35,8 +35,7 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
           'text/html': new Blob([anchors.join('<br>')]),
         }),
       );
-  }
-  else {
+  } else {
     if (!window.confirm('Start collecting same-origin links?')) return;
     const collection = new Set(
       collectAnchorElements(document.body, location.origin, true),
@@ -48,9 +47,9 @@ import { copyToClipboard } from '../modules/NavigatorExtensions.js';
             for (const node of mutation.addedNodes)
               if (node instanceof HTMLElement) {
                 if (
-                  node instanceof HTMLAnchorElement
-                  && /^https?:$/.test(node.protocol)
-                  && node.origin === location.origin
+                  node instanceof HTMLAnchorElement &&
+                  /^https?:$/.test(node.protocol) &&
+                  node.origin === location.origin
                 )
                   collection.add(node);
                 else
