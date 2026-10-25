@@ -33,7 +33,6 @@ export function extractAmazonAsin(
   }
   return null;
 }
-
 /**
  * Extract the YouTube video ID from the current page.
  *
@@ -55,7 +54,6 @@ export function extractYouTubeVideoId(
   }
   return null;
 }
-
 /**
  * Extract the YouTube playlist ID from the current page.
  *
@@ -69,7 +67,6 @@ export function extractYouTubePlaylistId(
   if (!is('youtube.com')) return null;
   return url.searchParams.get('list');
 }
-
 /**
  * @param {string} value
  * @returns {string | null}
@@ -81,7 +78,6 @@ export function toAmazon(value: string): string | null {
     ? `https://www.amazon.co.jp/dp/${cleaned}`
     : null;
 }
-
 /**
  * @param {string} value
  * @returns {string | null}
@@ -93,7 +89,6 @@ export function toKeepa(value: string): string | null {
     ? `https://keepa.com/#!product/5-${cleaned}`
     : null;
 }
-
 /**
  * @param {string} value
  * @returns {string | null}

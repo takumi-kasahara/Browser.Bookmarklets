@@ -1,8 +1,8 @@
 /**
  * @see {@link https://docs.x.com/x-api/posts/search/integrate/operators}
  */
-import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
-import { open } from '../modules/WindowExtensions.js';
+import { extractUrlsFromSelection } from '../modules/SelectionExtensions';
+import { open } from '../modules/WindowExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;

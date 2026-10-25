@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { copyToClipboard } from '../src/modules/NavigatorExtensions.js';
+import { copyToClipboard } from '../src/modules/NavigatorExtensions';
 
 describe('copyToClipboard', () => {
   afterEach(() => {

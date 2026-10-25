@@ -1,6 +1,6 @@
-import { extractElement } from './HtmlExtensions.js';
-import { toAmazon, toCalil } from './IdentifierExtensions.js';
-import { extractObjects, tryParse } from './JsonExtensions.js';
+import { extractElement } from './HtmlExtensions';
+import { toAmazon, toCalil } from './IdentifierExtensions';
+import { extractObjects, tryParse } from './JsonExtensions';
 
 /**
  * Extract candidate URLs from embedded structured data (microdata, RDFa, JSON-LD).
@@ -111,7 +111,6 @@ export function extractUrlsFromSchema(document: Document): string[] {
     return values.size > 0 ? Array.from(values).filter(Boolean) : [];
   }
 }
-
 /**
  * Extract candidate IDs from embedded structured data (microdata, RDFa, JSON-LD).
  *

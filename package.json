@@ -1,18 +1,18 @@
 {
   "type": "module",
   "scripts": {
-    "build": "npm run build:minify && npm run build:page && npm run lint",
+    "build": "npm run lint && npm run build:minify && npm run build:page",
     "build:minify": "node --experimental-strip-types .tools/build.minify.ts",
     "build:page": "node --experimental-strip-types .tools/build.page.ts",
     "lint": "prettier --write . && markdownlint-cli2 --fix . && eslint --fix .",
     "test": "vitest run",
-    "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@html-eslint/eslint-plugin": "^0.67.0",
     "@html-eslint/parser": "^0.67.0",
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^26.6.5",
     "@types/web": "^0.0.359",
     "@vitest/coverage-v8": "^4.1.12",

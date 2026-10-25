@@ -2,10 +2,10 @@ import {
   extractAmazonAsin,
   extractYouTubePlaylistId,
   extractYouTubeVideoId,
-} from '../modules/IdentifierExtensions.js';
-import { copyToClipboard } from '../modules/NavigatorExtensions.js';
-import { extractIdsFromSchema } from '../modules/SchemaExtensions.js';
-import { is } from '../modules/WindowExtensions.js';
+} from '../modules/IdentifierExtensions';
+import { copyToClipboard } from '../modules/NavigatorExtensions';
+import { extractIdsFromSchema } from '../modules/SchemaExtensions';
+import { is } from '../modules/WindowExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;

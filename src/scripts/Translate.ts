@@ -1,4 +1,4 @@
-import { from, is, tryFetch } from '../modules/WindowExtensions.js';
+import { from, is, tryFetch } from '../modules/WindowExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;

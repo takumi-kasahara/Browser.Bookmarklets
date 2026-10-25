@@ -1,4 +1,4 @@
-import { getRubyPairs } from '../modules/HtmlExtensions.js';
+import { getRubyPairs } from '../modules/HtmlExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;

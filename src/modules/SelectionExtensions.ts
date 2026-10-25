@@ -1,4 +1,4 @@
-import { toAmazon, toCalil } from './IdentifierExtensions.js';
+import { toAmazon, toCalil } from './IdentifierExtensions';
 
 /**
  * Convert a selected plain-text token (ASIN or ISBN) into a URL.

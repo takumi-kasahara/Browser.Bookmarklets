@@ -1,14 +1,4 @@
 /**
- * @param {string} text
- */
-export function escape(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-/**
  * @param {Element} ruby
  */
 export function getRubyPairs(ruby: Element): [string, string][] | null {
@@ -64,7 +54,6 @@ export function getRubyPairs(ruby: Element): [string, string][] | null {
   if (!pairs.length || baseText.trim()) return null;
   return pairs;
 }
-
 /**
  * @param {HTMLElement} element
  */
@@ -88,7 +77,6 @@ export function available(element: HTMLElement): boolean {
   if (!element.parentElement) return true;
   return available(element.parentElement);
 }
-
 /**
  * @param {HTMLElement} element
  */
@@ -102,7 +90,6 @@ export function visible(element: HTMLElement): boolean {
   if (!element.parentElement) return true;
   return visible(element.parentElement);
 }
-
 /**
  * @param {Element} element
  * @param {string} scopeAttribute
