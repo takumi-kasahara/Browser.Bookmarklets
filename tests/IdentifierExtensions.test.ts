@@ -5,7 +5,7 @@ import {
   extractYouTubeVideoId,
   toAmazon,
   toCalil,
-} from '../src/modules/IdentifierExtensions.js';
+} from '../src/modules/IdentifierExtensions';
 
 describe('toAmazon', () => {
   it('returns Amazon URL for valid 10-char ASIN', () => {

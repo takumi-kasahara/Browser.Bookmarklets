@@ -1,4 +1,4 @@
-import { copyToClipboard } from '../modules/NavigatorExtensions.js';
+import { copyToClipboard } from '../modules/NavigatorExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;

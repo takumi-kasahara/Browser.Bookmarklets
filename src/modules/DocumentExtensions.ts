@@ -12,7 +12,6 @@ export function createAnchorElement(url: string, text: string): string {
   a.setHTML(text ? text : url);
   return a.outerHTML;
 }
-
 /**
  * @param {HTMLElement} element
  * @param {string} origin
@@ -30,14 +29,12 @@ export function collectAnchorElements(
     return /^https?:$/.test(from(a).protocol) ? a.origin !== origin : false;
   });
 }
-
 /**
  * @param {number} ms
  */
 export async function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 /**
  * @param {string} selector
  * @param {number} maxRetry

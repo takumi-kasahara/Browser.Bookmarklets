@@ -4,7 +4,7 @@ import {
   createAnchorElement,
   sleep,
   waitForElement,
-} from '../src/modules/DocumentExtensions.js';
+} from '../src/modules/DocumentExtensions';
 
 describe('createAnchorElement', () => {
   it('renders an anchor with href, rel, and target', () => {

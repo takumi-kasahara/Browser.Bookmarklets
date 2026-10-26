@@ -1,4 +1,4 @@
-import { is } from '../modules/WindowExtensions.js';
+import { is } from '../modules/WindowExtensions';
 
 (() => {
   const text = document.getSelection?.()?.toString().trim() ?? '';

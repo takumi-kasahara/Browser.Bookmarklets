@@ -35,7 +35,7 @@ This project is a collection of browser bookmarklets that extend web browsing fu
 
 Project-specific TypeScript coding rules are maintained in:
 
-- [.agents/skills/typescript-browser-scripts/SKILL.md](.agents/skills/typescript-browser-scripts/SKILL.md)
+- [.agents/skills/typescript-browser-scripts/SKILL.md](.agents/skills/bookmarklets/SKILL.md)
 
 ## Module Organization
 
@@ -79,16 +79,3 @@ Project-specific TypeScript coding rules are maintained in:
 5. Export pure functions where possible
 6. Run `npm run build` to verify minification succeeds
 7. Test the minified version in your target browser (Firefox)
-
-## Project Configuration Files
-
-- `eslint.config.mjs`
-  - - ESLint rules (ensure consistency with coding conventions)
-- `jsconfig.json`
-  - - JavaScript configuration and type hints for VSCode
-- `.tools/build.minify.js`
-  - Build script for esbuild minification
-- `.tools/build.page.js`
-  - Build script for generating installation pages
-- `.markdownlint.json`
-  - Markdown linting rules

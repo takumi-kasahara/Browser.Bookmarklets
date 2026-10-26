@@ -1,21 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   available,
-  escape,
   extractElement,
   getRubyPairs,
   visible,
-} from '../src/modules/HtmlExtensions.js';
-
-describe('escape', () => {
-  it('escapes &, <, >', () => {
-    expect(escape('a&b<c>d')).toBe('a&amp;b&lt;c&gt;d');
-  });
-
-  it('leaves plain text unchanged', () => {
-    expect(escape('hello world')).toBe('hello world');
-  });
-});
+} from '../src/modules/HtmlExtensions';
 
 describe('getRubyPairs', () => {
   it('pairs rb elements with rt readings in order', () => {

@@ -4,10 +4,10 @@ import {
   extractYouTubeVideoId,
   toCalil,
   toKeepa,
-} from '../modules/IdentifierExtensions.js';
-import { extractUrlsFromSchema } from '../modules/SchemaExtensions.js';
-import { extractUrlsFromSelection } from '../modules/SelectionExtensions.js';
-import { equiv, is, open } from '../modules/WindowExtensions.js';
+} from '../modules/IdentifierExtensions';
+import { extractUrlsFromSchema } from '../modules/SchemaExtensions';
+import { extractUrlsFromSelection } from '../modules/SelectionExtensions';
+import { equiv, is, open } from '../modules/WindowExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;

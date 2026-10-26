@@ -1,8 +1,8 @@
 import {
   collectAnchorElements,
   createAnchorElement,
-} from '../modules/DocumentExtensions.js';
-import { copyToClipboard } from '../modules/NavigatorExtensions.js';
+} from '../modules/DocumentExtensions';
+import { copyToClipboard } from '../modules/NavigatorExtensions';
 
 (async () => {
   if (!/^https?:$/.test(location.protocol)) return;
