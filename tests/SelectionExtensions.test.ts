@@ -18,10 +18,10 @@ describe('extractUrlsFromSelection', () => {
         <a href="https://example.com/b">B</a>
         <p>text</p>
       </div>`;
-    const container = document.getElementById('container')!;
+    const container = document.getElementById('container') as HTMLElement;
     const range = document.createRange();
     range.selectNodeContents(container);
-    const selection = window.getSelection()!;
+    const selection = window.getSelection() as Selection;
     selection.removeAllRanges();
     selection.addRange(range);
     expect(extractUrlsFromSelection(document).sort()).toEqual([
@@ -36,10 +36,10 @@ describe('extractUrlsFromSelection', () => {
       <div id="container">
         <a href="https://example.com/inside">Inside</a>
       </div>`;
-    const container = document.getElementById('container')!;
+    const container = document.getElementById('container') as HTMLElement;
     const range = document.createRange();
     range.selectNodeContents(container);
-    const selection = window.getSelection()!;
+    const selection = window.getSelection() as Selection;
     selection.removeAllRanges();
     selection.addRange(range);
     expect(extractUrlsFromSelection(document)).toEqual([
@@ -59,7 +59,7 @@ describe('extractUrlsFromSelectionText', () => {
   });
 
   it('converts selected ASIN text to Amazon URL', () => {
-    const selection = window.getSelection()!;
+    const selection = window.getSelection() as Selection;
     selection.removeAllRanges();
     const range = document.createRange();
     range.selectNodeContents(document.body);
@@ -71,7 +71,7 @@ describe('extractUrlsFromSelectionText', () => {
   });
 
   it('converts selected ISBN text to Calil URL', () => {
-    const selection = window.getSelection()!;
+    const selection = window.getSelection() as Selection;
     selection.removeAllRanges();
     const range = document.createRange();
     range.selectNodeContents(document.body);
@@ -83,7 +83,7 @@ describe('extractUrlsFromSelectionText', () => {
   });
 
   it('returns empty array for non-ASIN/ISBN text', () => {
-    const selection = window.getSelection()!;
+    const selection = window.getSelection() as Selection;
     selection.removeAllRanges();
     const range = document.createRange();
     range.selectNodeContents(document.body);

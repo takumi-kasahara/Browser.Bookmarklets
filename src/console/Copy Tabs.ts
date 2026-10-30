@@ -5,7 +5,7 @@ import { copyToClipboard } from '../modules/NavigatorExtensions';
   const gBrowser = (
     window as unknown as Window & {
       gBrowser?: {
-        tabs?: Array<{ label?: string; canonicalUrl?: string }>;
+        tabs?: { label?: string; canonicalUrl?: string }[];
       };
     }
   ).gBrowser;

@@ -37,7 +37,7 @@ import { getRootDir } from './utils.ts';
     console.debug('create:', fileName);
     fs.writeFileSync(
       path.join(distDir, fileName),
-      bundled.outputFiles.at(0)!.text,
+      bundled.outputFiles.at(0)?.text as string,
       'utf-8',
     );
   }
