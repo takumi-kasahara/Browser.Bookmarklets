@@ -9,7 +9,7 @@ import { copyToClipboard } from '../modules/NavigatorExtensions';
 
   const COLLECTOR = Symbol.for('__CollectUrlObserver__');
   const COLLECTED = Symbol.for('__CollectedUrls__');
-  const state = window as unknown as Window & { [key: symbol]: unknown };
+  const state = window as unknown as Window & Record<symbol, unknown>;
   const collectedState = state[COLLECTED];
   const collectorState = state[COLLECTOR];
   if (
