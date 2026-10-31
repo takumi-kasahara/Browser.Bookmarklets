@@ -1,7 +1,7 @@
-.agents
-apm_modules
-coverage
-node_modules
+.agents/
+apm_modules/
+coverage/
+node_modules/
 
 .vscode/*
 !.vscode/*.code-snippets

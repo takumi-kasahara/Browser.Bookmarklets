@@ -8,7 +8,7 @@
 // jsdom lacks ClipboardItem (used by NavigatorExtensions.copyToClipboard).
 if (typeof globalThis.ClipboardItem === 'undefined') {
   class ClipboardItemPolyfill {
-    readonly types: ReadonlyArray<string>;
+    readonly types: readonly string[];
     readonly items: Record<string, Blob>;
     constructor(items: Record<string, Blob>) {
       this.items = items;

@@ -42,7 +42,7 @@ import { is } from '../modules/WindowExtensions';
   }
   function ifTwitter(): string[] {
     if (!is('x.com')) return [];
-    return path.at(1) === 'status' && path.at(2) ? [path.at(2)!] : [];
+    return path.at(1) === 'status' && path.at(2) ? [path.at(2) as string] : [];
   }
   function ifYouTube(): string[] {
     return [
