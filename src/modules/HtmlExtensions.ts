@@ -103,7 +103,7 @@ export function extractElement(
 ): Record<string, unknown> | null {
   const grouped = Object.groupBy(
     Array.from(element.querySelectorAll(`[${propertyAttribute}]`))
-      .filter((e): e is HTMLElement => e instanceof HTMLElement)
+      .filter(e => e instanceof HTMLElement)
       .filter(
         e =>
           e.parentElement?.closest(`[${scopeAttribute}]`) === element ||
