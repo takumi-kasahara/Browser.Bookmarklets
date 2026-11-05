@@ -12,9 +12,7 @@ import { copyToClipboard } from '../modules/NavigatorExtensions';
   if (!gBrowser?.tabs) return;
 
   const tabs = gBrowser.tabs;
-  const urls = tabs
-    .map(tab => tab.canonicalUrl)
-    .filter((u): u is string => Boolean(u));
+  const urls = tabs.map(tab => tab.canonicalUrl).filter(u => Boolean(u));
   const anchors = tabs
     .filter((tab): tab is { label?: string; canonicalUrl: string } =>
       Boolean(tab.canonicalUrl),

@@ -48,6 +48,6 @@ import { is } from '../modules/WindowExtensions';
     return [
       extractYouTubeVideoId(location.href),
       extractYouTubePlaylistId(location.href),
-    ].filter((x): x is string => Boolean(x));
+    ].filter((u): u is string => Boolean(u));
   }
 })();

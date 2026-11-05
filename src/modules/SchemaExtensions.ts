@@ -127,7 +127,7 @@ export function extractIdsFromSchema(document: Document): string[] {
     document.documentElement,
     ...document.querySelectorAll('[itemscope]'),
   ]
-    .filter((e): e is HTMLElement => e instanceof HTMLElement)
+    .filter(e => e instanceof HTMLElement)
     .flatMap(e =>
       fromElement(
         extractElement(e, 'itemscope', 'itemprop'),
@@ -140,7 +140,7 @@ export function extractIdsFromSchema(document: Document): string[] {
     document.documentElement,
     ...document.querySelectorAll('[typeof]'),
   ]
-    .filter((e): e is HTMLElement => e instanceof HTMLElement)
+    .filter(e => e instanceof HTMLElement)
     .flatMap(e =>
       fromElement(
         extractElement(e, 'typeof', 'property'),

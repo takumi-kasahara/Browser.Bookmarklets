@@ -21,11 +21,11 @@ import { copyToClipboard } from '../modules/NavigatorExtensions';
     state[COLLECTOR] = null;
     const collection = collectedState;
     const urls = Array.from(collection)
-      .filter((a): a is HTMLAnchorElement => a instanceof HTMLAnchorElement)
+      .filter(a => a instanceof HTMLAnchorElement)
       .map(a => a.href)
       .sort(new Intl.Collator(undefined, { numeric: true }).compare);
     const anchors = Array.from(collection)
-      .filter((a): a is HTMLAnchorElement => a instanceof HTMLAnchorElement)
+      .filter(a => a instanceof HTMLAnchorElement)
       .map(a => createAnchorElement(a.href, a.innerHTML.trim()));
     if (urls.length > 0)
       await copyToClipboard(
