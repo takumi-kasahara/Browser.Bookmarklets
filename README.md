@@ -1,6 +1,6 @@
 # Browser Bookmarklets
 
-A collection of utility bookmarklets for modern browsers (especially Firefox) that extend web browsing capabilities with quick access to common tasks like copying URLs, searching, and translating web content.
+A collection of utility browser bookmarklets.
 
 ## ️ Project Structure
 
@@ -13,13 +13,11 @@ dist/            # Built and minified bookmarklets (generated)
 pages/           # Installation and distribution pages
 ```
 
+## 📝 Installation
+
+Drag and drop the bookmarklet links from the [installation page](./pages/Bookmarklets.html) to your browser's bookmarks bar.
+
 ## 🚀 Development
-
-### Prerequisites
-
-- Node.js with npm
-
-### Installation
 
 ```bash
 npm install
@@ -30,11 +28,6 @@ npm install
 ```bash
 npm run build
 ```
-
-This runs both minification and page generation:
-
-- `npm run build:minify` - Bundles and minifies bookmarklets using esbuild
-- `npm run build:page` - Generates the installation page
 
 ### Output
 
@@ -48,7 +41,7 @@ This runs both minification and page generation:
 - Target Environment: Latest Firefox
 - JavaScript: Latest ECMAScript features
 - Browser APIs: No deprecated APIs
-- Protocols: Handles both `http://` and `https://` protocols
+- Protocols: Handles `file://`, `http://` and `https://` protocols
 
 ## 📄 License
 
