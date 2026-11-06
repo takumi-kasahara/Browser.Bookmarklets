@@ -6,7 +6,7 @@ import ts from 'typescript-eslint';
 
 export default defineConfig([
   globalIgnores(['apm_modules', 'node_modules']),
-  globalIgnores(['coverage', 'dist']),
+  globalIgnores(['coverage', 'bin']),
   {
     files: ['**/*.mjs'],
     plugins: {

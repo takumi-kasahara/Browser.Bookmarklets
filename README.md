@@ -9,7 +9,7 @@ src/
 ├── modules/  # Reusable utility functions
 ├── scripts/  # Bookmarklet scripts
 └── console/  # Firefox-specific scripts
-dist/            # Built and minified bookmarklets (generated)
+bin/             # Built and minified bookmarklets (generated)
 pages/           # Installation and distribution pages
 ```
 
@@ -31,7 +31,7 @@ npm run build
 
 ### Output
 
-- `dist/`
+- `bin/*.min.js`
   - Minified bookmarklets ready to use
 - `pages/Bookmarklets.html`
   - Installation page with bookmarklet links
