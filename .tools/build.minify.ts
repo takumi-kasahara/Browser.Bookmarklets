@@ -7,7 +7,7 @@ import { getRootDir } from './utils.ts';
 (async () => {
   const rootDir = getRootDir();
   const srcDir = path.join(rootDir, 'src', 'scripts');
-  const outDir = path.join(rootDir, 'dist');
+  const outDir = path.join(rootDir, 'bin');
   if (fs.existsSync(outDir))
     fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
@@ -29,14 +29,13 @@ import { getRootDir } from './utils.ts';
       platform: 'browser',
     });
     if (!bundled || !bundled.outputFiles?.at(0)?.text) continue;
-    const distDir = path.join(path.dirname(file).replace(srcDir, outDir));
-    if (distDir !== outDir)
-      fs.mkdirSync(path.join(distDir), { recursive: true });
+    const binDir = path.join(path.dirname(file).replace(srcDir, outDir));
+    if (binDir !== outDir) fs.mkdirSync(path.join(binDir), { recursive: true });
 
     const fileName = `${path.basename(file, path.extname(file))}.min.js`;
     console.debug('create:', fileName);
     fs.writeFileSync(
-      path.join(distDir, fileName),
+      path.join(binDir, fileName),
       bundled.outputFiles.at(0)?.text as string,
       'utf-8',
     );
