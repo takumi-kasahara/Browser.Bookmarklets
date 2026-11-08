@@ -1,7 +1,8 @@
 import { copyToClipboard } from '../modules/NavigatorExtensions';
 
 (async () => {
-  if (!/^https?:$/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol) || location.protocol === 'file:')
+    return;
 
   const title = document.title.trim();
   if (title) await copyToClipboard(`Copy title:`, title);

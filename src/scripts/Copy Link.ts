@@ -2,7 +2,8 @@ import { createAnchorElement } from '../modules/DocumentExtensions';
 import { copyToClipboard } from '../modules/NavigatorExtensions';
 
 (async () => {
-  if (!/^https?:$/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol) || location.protocol === 'file:')
+    return;
 
   const url = location.href;
   const title = document.title.trim();

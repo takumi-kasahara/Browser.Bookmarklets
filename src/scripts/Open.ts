@@ -10,7 +10,8 @@ import { extractUrlsFromSelection } from '../modules/SelectionExtensions';
 import { equiv, is, open } from '../modules/WindowExtensions';
 
 (async () => {
-  if (!/^https?:$/.test(location.protocol)) return;
+  if (!/^https?:$/.test(location.protocol) && location.protocol !== 'file:')
+    return;
 
   const path = location.pathname.split('/');
   const urls = Array.from(
