@@ -4,16 +4,24 @@ import { copyToClipboard } from '../modules/NavigatorExtensions';
   if (!/^https?:$/.test(location.protocol) || location.protocol === 'file:')
     return;
 
-  const table = document.querySelector('table');
-  if (table instanceof HTMLTableElement) {
-    const text = table.outerText;
-    const html = table.outerHTML;
-    await copyToClipboard(
-      `Copy table:`,
-      new ClipboardItem({
-        'text/plain': new Blob([text]),
-        'text/html': new Blob([html]),
-      }),
-    );
-  } else console.warn('Table not found.');
+  const tables = Array.from(document.querySelectorAll('table'));
+  if (tables.length === 0) {
+    console.warn('Table not found.');
+    return;
+  }
+  const text = tables
+    .filter(e => e instanceof HTMLTableElement)
+    .map(e => e.outerText)
+    .join('\n');
+  const html = tables
+    .filter(e => e instanceof HTMLTableElement)
+    .map(e => e.outerHTML)
+    .join('\n');
+  await copyToClipboard(
+    `Copy ${tables.length} Table(s):`,
+    new ClipboardItem({
+      'text/plain': new Blob([text]),
+      'text/html': new Blob([html]),
+    }),
+  );
 })();
