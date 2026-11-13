@@ -18,10 +18,10 @@ import { from, is, tryFetch } from '../modules/WindowExtensions';
         ? new URL(e.dataset.sourceUrl)
         : null;
     }
-    const alt_ja = alt('ja');
-    if (!lang('ja') && alt_ja) return to(alt_ja);
-    const alt_en = alt('en');
-    if (!lang('en') && alt_en) return to(alt_en);
+    const alt_ja = await alt('ja');
+    if (!lang('ja') && alt_ja) return alt_ja;
+    const alt_en = await alt('en');
+    if (!lang('en') && alt_en) return alt_en;
     if (is('android.com') || is('google.com') || is('google')) {
       if (!lang('ja') && url.searchParams.get('hl') !== 'ja')
         return replaceParam('hl', 'ja');
@@ -70,39 +70,52 @@ import { from, is, tryFetch } from '../modules/WindowExtensions';
     /**
      * @param {string} tag
      */
-    function alt(tag: string): HTMLAnchorElement | HTMLLinkElement | null {
+    async function alt(tag: string): Promise<URL | null> {
       if (tag === 'en') {
-        const e =
-          document.querySelector(
-            'link[rel="alternate"][hreflang="x-default"]',
-          ) ??
-          document.querySelector('link[rel="alternate"][hreflang="en-us"]') ??
-          document.querySelector('link[rel="alternate"][hreflang="en"]');
-        if (e instanceof HTMLLinkElement) return e;
+        const es = [
+          document.querySelector('link[rel="alternate"][hreflang="x-default"]'),
+          document.querySelector('link[rel="alternate"][hreflang="en-us"]'),
+          document.querySelector('link[rel="alternate"][hreflang="en"]'),
+          ...Array.from(
+            document.querySelectorAll('link[rel="alternate"][hreflang|="en"]'),
+          ),
+        ].filter(e => e instanceof HTMLLinkElement);
+        for (const e of es) {
+          if (from(e).origin !== location.origin) return new URL(e.href);
+          const result = await tryFetch(e);
+          if (result.exists) return new URL(result.url);
+        }
+      } else {
+        const e = document.querySelector(
+          `link[rel="alternate"][hreflang|="${tag}"]`,
+        );
+        if (e instanceof HTMLLinkElement) {
+          if (from(e).origin !== location.origin) return new URL(e.href);
+          const result = await tryFetch(e);
+          if (result.exists) return new URL(result.url);
+        }
       }
-      const e = document.querySelector(
-        `link[rel="alternate"][hreflang|="${tag}"]`,
-      );
-      if (e instanceof HTMLLinkElement) return e;
-      const es = document.querySelectorAll(`a[hreflang|="${tag}"]`);
-      return Array.from(es).find(e => e instanceof HTMLAnchorElement) ?? null;
+      const es = (
+        tag === 'en'
+          ? [
+              document.querySelector('a[hreflang="en-us"]'),
+              document.querySelector('a[hreflang="en"]'),
+              ...Array.from(document.querySelectorAll('a[hreflang|=en]')),
+            ]
+          : Array.from(document.querySelectorAll(`a[hreflang|=${tag}]`))
+      ).filter(e => e instanceof HTMLAnchorElement);
+      for (const e of es) {
+        if (from(e).origin !== location.origin) return new URL(e.href);
+        const result = await tryFetch(e);
+        if (result.exists) return new URL(result.url);
+      }
+      return null;
     }
     /**
      * @param {RegExp} regex
      */
     function of(regex: RegExp): number {
       return path.findIndex(segment => regex.test(segment));
-    }
-    /**
-     * @param {URL | HTMLAnchorElement | HTMLLinkElement} urlLike
-     */
-    async function to(
-      urlLike: URL | HTMLAnchorElement | HTMLLinkElement,
-    ): Promise<URL | null> {
-      const url = from(urlLike);
-      if (location.origin !== url.origin) return url;
-      const result = await tryFetch(url);
-      return result.exists ? new URL(result.url) : null;
     }
     /**
      * @param {string} name
