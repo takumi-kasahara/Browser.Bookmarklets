@@ -9,10 +9,8 @@ import { getRootDir } from './utils.ts';
   const srcDir = path.join(rootDir, 'src', 'scripts');
   const outDir = path.join(rootDir, 'bin');
   fs.mkdirSync(outDir, { recursive: true });
-  for (const entry of fs.readdirSync(outDir)) {
-    if (entry === '.gitignore') continue;
+  for (const entry of fs.readdirSync(outDir))
     fs.rmSync(path.join(outDir, entry), { recursive: true, force: true });
-  }
 
   const files = fs
     .readdirSync(srcDir, { recursive: true, withFileTypes: true })
