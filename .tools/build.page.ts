@@ -14,7 +14,7 @@ interface Bookmarklet {
 (async () => {
   const rootDir = getRootDir();
   const binRoot = path.join(rootDir, 'bin');
-  const outputPath = path.join(rootDir, 'pages', 'Bookmarklets.html');
+  const outputPath = path.join(rootDir, 'index.html');
   const bookmarklets = collectBookmarklets(binRoot);
   const config = await resolveConfig(outputPath);
   const generated = await format(generate(bookmarklets), {

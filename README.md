@@ -15,7 +15,7 @@ pages/           # Installation and distribution pages
 
 ## 📝 Installation
 
-Drag and drop the bookmarklet links from the [installation page](./pages/Bookmarklets.html) to your browser's bookmarks bar.
+Drag and drop the bookmarklet links from the [installation page](./index.html) to your browser's bookmarks bar.
 
 ## 🚀 Development
 
