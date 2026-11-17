@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { ESLint } from 'eslint';
 import { JSDOM } from 'jsdom';
-import fs from 'node:fs';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { format, resolveConfig } from 'prettier';
 import { getRootDir } from './utils.ts';
@@ -15,7 +15,7 @@ interface Bookmarklet {
   const rootDir = getRootDir();
   const binRoot = path.join(rootDir, 'bin');
   const outputPath = path.join(rootDir, 'pages', 'Bookmarklets.html');
-  const bookmarklets = collectBookmarklets(binRoot);
+  const bookmarklets = await collectBookmarklets(binRoot);
   const config = await resolveConfig(outputPath);
   const generated = await format(generate(bookmarklets), {
     ...config,
@@ -32,18 +32,21 @@ interface Bookmarklet {
     throw new Error('ESLint failed for generated page');
   }
   const code = eslintResult?.output ?? generated;
-  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-  fs.writeFileSync(outputPath, code, 'utf-8');
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.writeFile(outputPath, code, 'utf-8');
   console.debug('created:', outputPath);
 
-  function collectBookmarklets(dir: string): Bookmarklet[] {
+  async function collectBookmarklets(dir: string): Promise<Bookmarklet[]> {
     const bookmarklets: Bookmarklet[] = [];
-    const files = fs.readdirSync(dir, { recursive: true, withFileTypes: true });
+    const files = await fs.readdir(dir, {
+      recursive: true,
+      withFileTypes: true,
+    });
     for (const file of files) {
       if (!file.isFile() || !file.name.endsWith('.min.js')) continue;
       const absPath = path.join(file.parentPath, file.name);
       const relPath = path.relative(dir, absPath);
-      const code = fs.readFileSync(absPath, 'utf-8');
+      const code = await fs.readFile(absPath, 'utf-8');
       bookmarklets.push({
         name: computeEntryName(relPath),
         href: `javascript:${encodeURIComponent(code.trim())}`,

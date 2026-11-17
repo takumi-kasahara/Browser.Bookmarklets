@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { build } from 'esbuild';
-import fs from 'node:fs';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import { getRootDir } from './utils.ts';
 
@@ -8,17 +8,18 @@ import { getRootDir } from './utils.ts';
   const rootDir = getRootDir();
   const srcDir = path.join(rootDir, 'src', 'scripts');
   const outDir = path.join(rootDir, 'bin');
-  fs.mkdirSync(outDir, { recursive: true });
-  for (const entry of fs.readdirSync(outDir)) {
+  await fs.mkdir(outDir, { recursive: true });
+  for (const entry of await fs.readdir(outDir)) {
     if (entry === '.gitignore') continue;
-    fs.rmSync(path.join(outDir, entry), { recursive: true, force: true });
+    await fs.rm(path.join(outDir, entry), { recursive: true, force: true });
   }
 
-  const files = fs
-    .readdirSync(srcDir, { recursive: true, withFileTypes: true })
-    .filter((x: fs.Dirent): boolean => x.isFile())
-    .map((x: fs.Dirent): string => path.join(x.parentPath, x.name))
-    .filter((x: string): boolean => !/\.test\.[cm]?[jt]sx?$/.test(x));
+  const files = (
+    await fs.readdir(srcDir, { recursive: true, withFileTypes: true })
+  )
+    .filter(x => x.isFile())
+    .map((x): string => path.join(x.parentPath, x.name))
+    .filter(x => !/\.test\.[cm]?[jt]sx?$/.test(x));
   for (const file of files) {
     const bundled = await build({
       entryPoints: [file],
@@ -32,11 +33,12 @@ import { getRootDir } from './utils.ts';
     });
     if (!bundled || !bundled.outputFiles?.at(0)?.text) continue;
     const binDir = path.join(path.dirname(file).replace(srcDir, outDir));
-    if (binDir !== outDir) fs.mkdirSync(path.join(binDir), { recursive: true });
+    if (binDir !== outDir)
+      await fs.mkdir(path.join(binDir), { recursive: true });
 
     const fileName = `${path.basename(file, path.extname(file))}.min.js`;
     console.debug('create:', fileName);
-    fs.writeFileSync(
+    await fs.writeFile(
       path.join(binDir, fileName),
       bundled.outputFiles.at(0)?.text as string,
       'utf-8',
