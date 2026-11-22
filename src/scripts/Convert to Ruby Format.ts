@@ -8,9 +8,7 @@ import { getRubyPairs } from '../modules/HtmlExtensions';
     if (!pairs) continue;
 
     const replacement = document.createElement('span');
-    replacement.textContent = pairs
-      .map(([baseText, readingText]) => `｛${baseText}｜${readingText}｝`)
-      .join('');
+    replacement.textContent = pairs.map(([rb, rt]) => `{${rb}|${rt}}`).join('');
     ruby.replaceWith(replacement);
   }
 })();

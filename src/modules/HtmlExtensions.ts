@@ -2,27 +2,26 @@
  * @param {Element} ruby
  */
 export function getRubyPairs(ruby: Element): [string, string][] | null {
-  const baseElements = Array.from(ruby.children).filter(
+  const rbs = Array.from(ruby.children).filter(
     element => element.localName === 'rb',
   );
-  const readingElements = Array.from(ruby.children).filter(
+  const rts = Array.from(ruby.children).filter(
     element => element.localName === 'rt',
   );
 
-  if (baseElements.length > 0) {
-    if (baseElements.length !== readingElements.length) return null;
+  if (rbs.length > 0) {
+    if (rbs.length !== rts.length) return null;
 
     const pairs: [string, string][] = [];
-    for (const [index, baseElement] of baseElements.entries()) {
-      const readingElement = readingElements.at(index);
+    for (const [index, baseElement] of rbs.entries()) {
+      const readingElement = rts.at(index);
       if (!readingElement) return null;
 
-      const baseText = baseElement.textContent?.trim() ?? '';
-      const readingText =
-        readingElement.textContent?.trim().toLowerCase() ?? '';
-      if (!baseText || !readingText) return null;
+      const rb = baseElement.textContent?.trim() ?? '';
+      const rt = readingElement.textContent?.trim().toLowerCase() ?? '';
+      if (!rb || !rt) return null;
 
-      pairs.push([baseText, readingText]);
+      pairs.push([rb, rt]);
     }
     return pairs;
   }
