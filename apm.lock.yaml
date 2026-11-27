@@ -1,11 +1,13 @@
-lockfile_version: '1'
-apm_version: 0.36.1
+lockfile_version: '4'
+apm_version: 0.39.1
+manifest_targets:
+  - copilot
 dependencies:
   - repo_url: takumi-kasahara/dotfiles
     materialization_repo_url: takumi-kasahara/Dotfiles
     name: bookmarklets
     host: github.com
-    resolved_commit: efcbb8e0522a059c43018f851369cc67c51df689
+    resolved_commit: 29b40a451081461e506584a6391ca91c1d4c605c
     version: unknown
     virtual_path: .apm/skills/bookmarklets
     is_virtual: true
@@ -17,7 +19,7 @@ dependencies:
     deployed_file_hashes:
       .agents/skills/bookmarklets/LICENSE: sha256:3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986
       .agents/skills/bookmarklets/SKILL.md: sha256:11392cb4ddd29d627b0433fc073c5d1d8d5c9b0db8d3c070a62aacfabab233a8
-    content_hash: sha256:bbbd1e6d24b3dfa0088dbdb72f338098fd8841488264dfdf4af90b5542d01d54
+    content_hash: sha256:14104a39bff362ada37e3fcfb6b2f3eb66f18690b8739b5a4f4e451a88c7caf1
     carried_licenses:
       - path: LICENSE
         source: LICENSE
