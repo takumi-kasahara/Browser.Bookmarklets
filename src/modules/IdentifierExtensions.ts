@@ -86,7 +86,7 @@ export function toKeepa(value: string): string | null {
   if (!value) return null;
   const cleaned = value.trim().toUpperCase();
   return /^[A-Z0-9]{10}$/.test(cleaned)
-    ? `https://keepa.com/#!product/5-${cleaned}`
+    ? `https://keepa.com/product/5-${cleaned}`
     : null;
 }
 /**
